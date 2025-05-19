@@ -229,5 +229,53 @@
   <script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
 <div id="container-edeaa5234b144caee3318cf798e427a1"></div>
   <script type='text/javascript' src='//pl26683914.profitableratecpm.com/9b/fa/79/9bfa79a1ffc298e9654ecdd6866ebec2.js'></script>
+  <div id="ad-container"></div>
+<script type="text/javascript">
+  var adScripts = [
+    {
+      type: 'custom',
+      code: `
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '7651f53528438eccf587c285b3818b43',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
+      `
+    },
+    { type: 'script', src: <script type="text/javascript">
+	atOptions = {
+		'key' : '7651f53528438eccf587c285b3818b43',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>' }, // Replace with Adsterra 300x250 banner script
+    { type: 'script', src: '//your-adsterra-native-script-url2.js' }  // Replace with Adsterra native ad script
+  ];
+  var currentAd = 0;
+  function rotateAd() {
+    var container = document.getElementById('ad-container');
+    container.innerHTML = '';
+    var ad = adScripts[currentAd];
+    if (ad.type === 'custom') {
+      container.innerHTML = ad.code;
+    } else {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = ad.src;
+      container.appendChild(script);
+    }
+    currentAd = (currentAd + 1) % adScripts.length;
+  }
+  rotateAd(); // Load first ad
+  setInterval(rotateAd, 300000); // Rotate every 5 minutes
+</script>
 </body>
 </html>
