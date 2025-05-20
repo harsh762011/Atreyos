@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home Page with Cycling Ads</title>
+  <title>Home Page with Four Ads</title>
   <style>
     body {
       margin: 0;
@@ -69,23 +69,23 @@
     .navbar a:hover {
       background: #222;
     }
-    /* all ad containers share this */
-    .ad-slot {
-      width: 320px;   /* max of your ad widths */
-      height: 600px;  /* max of your ad heights */
-      position: absolute;
-      top: 20px;      /* adjust as needed */
-      right: 20px;    /* adjust as needed */
-      display: none;
+
+    /* New ad container */
+    .ads-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
     }
-    .ad-slot.active {
-      display: block;
+    .ad-slot {
+      width: 320px;
+      height: 250px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Your Page Content -->
   <div class="container">
     <h1>Welcome to the Home Page</h1>
 
@@ -114,69 +114,60 @@
     </div>
   </div>
 
-  <!-- Ad Slots -->
-  <div class="ad-slot" id="ad1">
-    <script>
-      atOptions = {
-        key: '74caf817ed5b917ef91f9c30f92ac327',
-        format: 'iframe',
-        height: 250,
-        width: 300,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+  <!-- Ads Section -->
+  <div class="ads-wrapper">
+    <div class="ad-slot">
+      <script>
+        atOptions = {
+          key: '74caf817ed5b917ef91f9c30f92ac327',
+          format: 'iframe',
+          height: 250,
+          width: 300,
+          params: {}
+        };
+      </script>
+      <script src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+    </div>
+
+    <div class="ad-slot">
+      <script>
+        atOptions = {
+          key: '0d582796d01fc00d004acc5e06194b52',
+          format: 'iframe',
+          height: 250,
+          width: 300,
+          params: {}
+        };
+      </script>
+      <script src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
+    </div>
+
+    <div class="ad-slot">
+      <script>
+        atOptions = {
+          key: '7651f53528438eccf587c285b3818b43',
+          format: 'iframe',
+          height: 250,
+          width: 300,
+          params: {}
+        };
+      </script>
+      <script src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
+    </div>
+
+    <div class="ad-slot">
+      <script>
+        atOptions = {
+          key: '<script type='text/javascript' src='//pl26683914.profitableratecpm.com/9b/fa/79/9bfa79a1ffc298e9654ecdd6866ebec2.js'></script>',
+          format: 'iframe',
+          height: 250,
+          width: 300,
+          params: {}
+        };
+      </script>
+      <script src="//www.highperformanceformat.com/YOUR_4TH_AD_KEY_HERE/invoke.js"></script>
+    </div>
   </div>
-
-  <div class="ad-slot" id="ad2">
-    <script>
-      atOptions = {
-        key: '0d582796d01fc00d004acc5e06194b52',
-        format: 'iframe',
-        height: 600,
-        width: 160,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
-  </div>
-
-  <div class="ad-slot" id="ad3">
-    <script>
-      atOptions = {
-        key: '7651f53528438eccf587c285b3818b43',
-        format: 'iframe',
-        height: 50,
-        width: 320,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
-  </div>
-
-  <!-- Cycle Logic -->
-  <script>
-    // How long each ad should stay visible (ms).
-    // 60 000 = 60 seconds. For 1s swap, use 1000.
-    const AD_SWITCH_INTERVAL = 60000;
-
-    window.addEventListener('load', () => {
-      const slots = Array.from(document.querySelectorAll('.ad-slot'));
-      let current = 0;
-
-      // show the first ad
-      slots[current].classList.add('active');
-
-      setInterval(() => {
-        // hide current
-        slots[current].classList.remove('active');
-        // advance index
-        current = (current + 1) % slots.length;
-        // show next
-        slots[current].classList.add('active');
-      }, AD_SWITCH_INTERVAL);
-    });
-  </script>
 
 </body>
 </html>
