@@ -227,62 +227,6 @@
     }
   </script>
   
-<div id="ad-container"></div>
-<script type="text/javascript">
-  var adScripts = [
-    {
-      type: 'custom',
-      code: `
-        <script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
-        <div id="container-edeaa5234b144caee3318cf798e427a1"></div>
-      `
-    },
-    {
-      type: 'custom',
-      code: `
-        <script type="text/javascript">
-          atOptions = {
-            'key' : '7651f53528438eccf587c285b3818b43',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
-      `
-    },
-    { type: 'script', src: <script type="text/javascript">
-	atOptions = {
-		'key' : '74caf817ed5b917ef91f9c30f92ac327',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script> }, // Replace with actual Adsterra 300x250 banner script
-    { <script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
-<div id="container-edeaa5234b144caee3318cf798e427a1"></div> } // Replace with actual Adsterra native banner script
-  ];
-  var currentAd = 0;
-  function rotateAd() {
-    var container = document.getElementById('ad-container');
-    container.innerHTML = ''; // Clear previous ad
-    var ad = adScripts[currentAd];
-    if (ad.type === 'custom') {
-      container.innerHTML = ad.code; // Load custom script
-    } else {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = ad.src;
-      script.async = true; // Optimize loading
-      container.appendChild(script);
-    }
-    currentAd = (currentAd + 1) % adScripts.length; // Cycle to next ad
-  }
-  rotateAd(); // Load first ad
-  setInterval(rotateAd, 60000); // Rotate every 1 minute (60,000 ms)
-</script>
+
 </body>
 </html>
