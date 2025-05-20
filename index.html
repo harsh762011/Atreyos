@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  
   <meta charset="UTF-8">
   <title>Stylish Home Page</title>
   <style>
@@ -15,6 +13,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      flex-direction: column;
     }
 
     .container {
@@ -23,6 +22,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       width: 350px;
+      margin-bottom: 20px;
     }
 
     .container h1 {
@@ -60,12 +60,36 @@
       transform: translateY(-3px);
     }
 
-    /* Hide audio controls */
     audio {
       display: none;
     }
+
+    .navbar {
+      margin-top: 20px;
+    }
+
+    .navbar a {
+      display: inline-block;
+      margin: 5px;
+      text-decoration: none;
+      background: #444;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 4px;
+    }
+
+    .navbar a:hover {
+      background: #222;
+    }
+
+    .ad-rotate {
+      display: inline-block;
+      transform-origin: center;
+      transition: transform 1s ease-in-out;
+      margin: 10px;
+    }
   </style>
- <meta name="e6b30ccda801d68b5d38d4de90d89675c027ca0d" content="e6b30ccda801d68b5d38d4de90d89675c027ca0d" />
+  <meta name="e6b30ccda801d68b5d38d4de90d89675c027ca0d" content="e6b30ccda801d68b5d38d4de90d89675c027ca0d" />
 </head>
 <body>
 
@@ -78,7 +102,6 @@
   <div class="container">
     <h1>Welcome to the Home Page</h1>
 
-    <!-- Web Search Section -->
     <div class="section">
       <h2>Web Search</h2>
       <a href="youtube.html">VIDEO SEARCH</a>
@@ -86,54 +109,82 @@
       <a href="connector.html">AI SEARCH</a>
     </div>
 
-    <!-- Provider Section -->
     <div class="section">
       <h2>Provider</h2>
       <a href="pdf_provider.html">PDF provider</a>
     </div>
 
-    <!-- Master Ability Section -->
     <div class="section">
       <h2>Master Abilities of the website</h2>
       <a href="CODE2.HTML">Test Generator for JEE MAINS AND JEE ADVANCED students</a>
       <a href="code.html">Test Generator for NEET students</a>
     </div>
-<div class="navbar">
-  <a href="contactus.html">Contact Us</a>
-  <a href="Privacypolicy.txt">Privacy Policy</a>
-  <a href="aboutus.txt"> about us</a>
-</div>
 
+    <div class="navbar">
+      <a href="contactus.html">Contact Us</a>
+      <a href="Privacypolicy.txt">Privacy Policy</a>
+      <a href="aboutus.txt">About Us</a>
+    </div>
   </div>
-<script type="text/javascript">
-	atOptions = {
-		'key' : '74caf817ed5b917ef91f9c30f92ac327',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
-	<script type="text/javascript">
-	atOptions = {
-		'key' : '0d582796d01fc00d004acc5e06194b52',
-		'format' : 'iframe',
-		'height' : 600,
-		'width' : 160,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
-	<script type="text/javascript">
-	atOptions = {
-		'key' : '7651f53528438eccf587c285b3818b43',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
+
+  <!-- Adsterra Ad Containers with Rotation -->
+  <div class="ad-rotate" id="ad1">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '74caf817ed5b917ef91f9c30f92ac327',
+        'format': 'iframe',
+        'height': 250,
+        'width': 300,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+  </div>
+
+  <div class="ad-rotate" id="ad2">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '0d582796d01fc00d004acc5e06194b52',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
+  </div>
+
+  <div class="ad-rotate" id="ad3">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '7651f53528438eccf587c285b3818b43',
+        'format': 'iframe',
+        'height': 50,
+        'width': 320,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
+  </div>
+
+  <!-- JavaScript to Rotate Ads Every 1 Minute -->
+  <script>
+    const rotateAds = () => {
+      document.querySelectorAll('.ad-rotate').forEach(ad => {
+        const rotated = ad.getAttribute('data-rotated') === 'true';
+        ad.style.transform = rotated ? 'rotate(0deg)' : 'rotate(180deg)';
+        ad.setAttribute('data-rotated', (!rotated).toString());
+      });
+    };
+
+    // Set initial data and transition
+    document.querySelectorAll('.ad-rotate').forEach(ad => {
+      ad.setAttribute('data-rotated', 'false');
+    });
+
+    // Rotate every 60 seconds
+    setInterval(rotateAds, 60000);
+  </script>
+
 </body>
 </html>
