@@ -15,7 +15,6 @@
       min-height: 100vh;
       flex-direction: column;
     }
-
     .container {
       background: rgba(255, 255, 255, 0.9);
       padding: 40px;
@@ -24,17 +23,8 @@
       width: 350px;
       margin-bottom: 20px;
     }
-
-    .container h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #333;
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
+    .container h1 { text-align: center; margin-bottom: 30px; color: #333; }
+    .section { margin-bottom: 30px; }
     .section h2 {
       margin-bottom: 15px;
       color: #444;
@@ -42,7 +32,6 @@
       padding-bottom: 5px;
       font-size: 1.2em;
     }
-
     .section a {
       display: block;
       text-decoration: none;
@@ -54,20 +43,15 @@
       text-align: center;
       transition: background 0.3s, transform 0.3s;
     }
-
     .section a:hover {
       background: #ff3b2e;
       transform: translateY(-3px);
     }
-
-    audio {
-      display: none;
-    }
-
+    audio { display: none; }
     .navbar {
       margin-top: 20px;
+      text-align: center;
     }
-
     .navbar a {
       display: inline-block;
       margin: 5px;
@@ -76,12 +60,9 @@
       color: #fff;
       padding: 8px 14px;
       border-radius: 4px;
+      transition: background 0.3s;
     }
-
-    .navbar a:hover {
-      background: #222;
-    }
-
+    .navbar a:hover { background: #222; }
     .ad-rotate {
       display: inline-block;
       transform-origin: center;
@@ -93,10 +74,9 @@
 </head>
 <body>
 
-  <!-- Background Environmental Music -->
+  <!-- Background Music -->
   <audio autoplay loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f77231e49.mp3?filename=soft-rain-ambient-111126.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
   </audio>
 
   <div class="container">
@@ -116,8 +96,8 @@
 
     <div class="section">
       <h2>Master Abilities of the website</h2>
-      <a href="CODE2.HTML">Test Generator for JEE MAINS AND JEE ADVANCED students</a>
-      <a href="code.html">Test Generator for NEET students</a>
+      <a href="CODE2.HTML">Test Generator for JEE MAINS AND ADVANCED</a>
+      <a href="code.html">Test Generator for NEET</a>
     </div>
 
     <div class="navbar">
@@ -127,63 +107,66 @@
     </div>
   </div>
 
-  <!-- Adsterra Ad Containers with Rotation -->
+  <!-- Adsterra Ads -->
   <div class="ad-rotate" id="ad1">
-    <script type="text/javascript">
+    <script>
       atOptions = {
-        'key': '74caf817ed5b917ef91f9c30f92ac327',
-        'format': 'iframe',
-        'height': 250,
-        'width': 300,
-        'params': {}
+        key: '74caf817ed5b917ef91f9c30f92ac327',
+        format: 'iframe',
+        height: 250,
+        width: 300,
+        params: {}
       };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+    <script src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
   </div>
 
   <div class="ad-rotate" id="ad2">
-    <script type="text/javascript">
+    <script>
       atOptions = {
-        'key': '0d582796d01fc00d004acc5e06194b52',
-        'format': 'iframe',
-        'height': 600,
-        'width': 160,
-        'params': {}
+        key: '0d582796d01fc00d004acc5e06194b52',
+        format: 'iframe',
+        height: 600,
+        width: 160,
+        params: {}
       };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
+    <script src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
   </div>
 
   <div class="ad-rotate" id="ad3">
-    <script type="text/javascript">
+    <script>
       atOptions = {
-        'key': '7651f53528438eccf587c285b3818b43',
-        'format': 'iframe',
-        'height': 50,
-        'width': 320,
-        'params': {}
+        key: '7651f53528438eccf587c285b3818b43',
+        format: 'iframe',
+        height: 50,
+        width: 320,
+        params: {}
       };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
+    <script src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
   </div>
 
-  <!-- JavaScript to Rotate Ads Every 1 Minute -->
+  <!-- Rotation Logic: wait for full load -->
   <script>
-    const rotateAds = () => {
+    window.onload = function() {
+      // Initialize state
       document.querySelectorAll('.ad-rotate').forEach(ad => {
-        const rotated = ad.getAttribute('data-rotated') === 'true';
-        ad.style.transform = rotated ? 'rotate(0deg)' : 'rotate(180deg)';
-        ad.setAttribute('data-rotated', (!rotated).toString());
+        ad.setAttribute('data-rotated', 'false');
       });
+
+      // Rotation function
+      function rotateAds() {
+        document.querySelectorAll('.ad-rotate').forEach(ad => {
+          const isRotated = ad.getAttribute('data-rotated') === 'true';
+          ad.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(180deg)';
+          ad.setAttribute('data-rotated', (!isRotated).toString());
+        });
+      }
+
+      // Start rotating every 60 seconds
+      setInterval(rotateAds, 60000);
     };
-
-    // Set initial data and transition
-    document.querySelectorAll('.ad-rotate').forEach(ad => {
-      ad.setAttribute('data-rotated', 'false');
-    });
-
-    // Rotate every 60 seconds
-    setInterval(rotateAds, 60000);
   </script>
 
 </body>
