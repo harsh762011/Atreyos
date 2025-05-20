@@ -114,69 +114,37 @@
     </div>
   </div>
 
-  <!-- Ad Slots -->
-  <div class="ad-slot" id="ad1">
-    <script>
-      atOptions = {
-        key: '74caf817ed5b917ef91f9c30f92ac327',
-        format: 'iframe',
-        height: 250,
-        width: 300,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
-  </div>
+ <script type="text/javascript">
+	atOptions = {
+		'key' : '74caf817ed5b917ef91f9c30f92ac327',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '0d582796d01fc00d004acc5e06194b52',
+		'format' : 'iframe',
+		'height' : 600,
+		'width' : 160,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '7651f53528438eccf587c285b3818b43',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
 
-  <div class="ad-slot" id="ad2">
-    <script>
-      atOptions = {
-        key: '0d582796d01fc00d004acc5e06194b52',
-        format: 'iframe',
-        height: 600,
-        width: 160,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
-  </div>
-
-  <div class="ad-slot" id="ad3">
-    <script>
-      atOptions = {
-        key: '7651f53528438eccf587c285b3818b43',
-        format: 'iframe',
-        height: 50,
-        width: 320,
-        params: {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
-  </div>
-
-  <!-- Cycle Logic -->
-  <script>
-    // How long each ad should stay visible (ms).
-    // 60 000 = 60 seconds. For 1s swap, use 1000.
-    const AD_SWITCH_INTERVAL = 60000;
-
-    window.addEventListener('load', () => {
-      const slots = Array.from(document.querySelectorAll('.ad-slot'));
-      let current = 0;
-
-      // show the first ad
-      slots[current].classList.add('active');
-
-      setInterval(() => {
-        // hide current
-        slots[current].classList.remove('active');
-        // advance index
-        current = (current + 1) % slots.length;
-        // show next
-        slots[current].classList.add('active');
-      }, AD_SWITCH_INTERVAL);
-    });
-  </script>
 
 </body>
 </html>
