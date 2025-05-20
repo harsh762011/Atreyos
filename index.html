@@ -9,6 +9,9 @@
       padding: 0;
       background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       min-height: 100vh;
     }
     .container {
@@ -17,7 +20,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       width: 350px;
-      margin: 30px auto;
+      margin-top: 20px;
     }
     .container h1 {
       text-align: center;
@@ -50,7 +53,7 @@
       transform: translateY(-3px);
     }
     .navbar {
-      margin-top: 10px;
+      margin: 20px 0;
       text-align: center;
     }
     .navbar a {
@@ -66,32 +69,23 @@
     .navbar a:hover {
       background: #222;
     }
-
-    /* Sticky Ad Slots */
+    /* all ad containers share this */
     .ad-slot {
-      position: fixed;
-      z-index: 9999;
+      width: 320px;   /* max of your ad widths */
+      height: 600px;  /* max of your ad heights */
+      position: absolute;
+      top: 20px;      /* adjust as needed */
+      right: 20px;    /* adjust as needed */
       display: none;
     }
     .ad-slot.active {
       display: block;
     }
-    #ad1 {
-      bottom: 10px;
-      left: 10px;
-    }
-    #ad2 {
-      top: 10px;
-      right: 10px;
-    }
-    #ad3 {
-      bottom: 10px;
-      right: 10px;
-    }
   </style>
 </head>
 <body>
 
+  <!-- Your Page Content -->
   <div class="container">
     <h1>Welcome to the Home Page</h1>
 
@@ -121,7 +115,7 @@
   </div>
 
   <!-- Ad Slots -->
-  <div class="ad-slot active" id="ad1">
+  <div class="ad-slot" id="ad1">
     <script>
       atOptions = {
         key: '74caf817ed5b917ef91f9c30f92ac327',
@@ -134,7 +128,7 @@
     <script src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
   </div>
 
-  <div class="ad-slot active" id="ad2">
+  <div class="ad-slot" id="ad2">
     <script>
       atOptions = {
         key: '0d582796d01fc00d004acc5e06194b52',
@@ -160,17 +154,27 @@
     <script src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
   </div>
 
-  <!-- Ad Rotation Script (cycles only ad3) -->
+  <!-- Cycle Logic -->
   <script>
-    const ad3 = document.getElementById('ad3');
-    const AD_ROTATE_MS = 10000; // 10 seconds
+    // How long each ad should stay visible (ms).
+    // 60 000 = 60 seconds. For 1s swap, use 1000.
+    const AD_SWITCH_INTERVAL = 60000;
 
     window.addEventListener('load', () => {
-      ad3.classList.add('active');
+      const slots = Array.from(document.querySelectorAll('.ad-slot'));
+      let current = 0;
+
+      // show the first ad
+      slots[current].classList.add('active');
 
       setInterval(() => {
-        ad3.classList.toggle('active');
-      }, AD_ROTATE_MS);
+        // hide current
+        slots[current].classList.remove('active');
+        // advance index
+        current = (current + 1) % slots.length;
+        // show next
+        slots[current].classList.add('active');
+      }, AD_SWITCH_INTERVAL);
     });
   </script>
 
