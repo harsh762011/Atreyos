@@ -211,5 +211,180 @@
     </div>
     <!-- Add additional subjects as needed -->
   </div>
+  const adConfigs = [
+  {
+    slotId: 'newAdSlot',
+    key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
+    format: 'iframe',
+    height: 90,
+    width: 728,
+    params: {},
+    network: 'highperformanceformat'
+  },
+  {
+    slotId: 'adSlot1',
+    key: '74caf817ed5b917ef91f9c30f92ac327',
+    format: 'iframe',
+    height: 250,
+    width: 300,
+    params: {},
+    network: 'highperformanceformat'
+  },
+  {
+    slotId: 'adSlot2',
+    key: '0d582796d01fc00d004acc5e06194b52',
+    format: 'iframe',
+    height: 600,
+    width: 160,
+    params: {},
+    network: 'highperformanceformat'
+  },
+  {
+    slotId: 'adSlot3',
+    key: '7651f53528438eccf587c285b3818b43',
+    format: 'iframe',
+    height: 50,
+    width: 320,
+    params: {},
+    network: 'highperformanceformat'
+  },
+  {
+    slotId: 'profitAdSlot',
+    key: 'f02b091dc81ac646962a1e4fba9ea429',
+    network: 'profitableratecpm'
+  },
+  {
+    slotId: 'newAdSlot2',
+    key: '83b113682101cfeedd8174102f412d6f',
+    format: 'iframe',
+    height: 300,
+    width: 160,
+    params: {},
+    network: 'highperformanceformat'
+  },
+  {
+    slotId: 'newAdSlot3',
+    key: '650b4b7c68b9e7f869175d7812827abd',
+    format: 'iframe',
+    height: 60,
+    width: 468,
+    params: {},
+    network: 'highperformanceformat'
+  }
+];
+
+let adCount = 0;
+const maxAds = 20;
+const adInterval = 5 * 1000; // 5 seconds
+const loadDelay = 500; // 500ms delay between each ad load
+
+function loadHighPerformanceAd(config, callback) {
+  const adSlot = document.getElementById(config.slotId);
+  if (!adSlot) {
+    console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+    if (callback) callback();
+    return;
+  }
+
+  adSlot.innerHTML = '';
+
+  const iframe = document.createElement('iframe');
+  iframe.width = config.width;
+  iframe.height = config.height;
+  iframe.frameBorder = '0';
+  iframe.scrolling = 'no';
+
+  const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.text = `atOptions = ${JSON.stringify({
+    key: config.key,
+    format: config.format,
+    height: config.height,
+    width: config.width,
+    params: config.params
+  })};`;
+
+  adSlot.appendChild(script);
+  adSlot.appendChild(iframe);
+  const invokeScript = document.createElement('script');
+  invokeScript.src = adUrl;
+  invokeScript.onerror = () => {
+    console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+    adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+    if (callback) callback();
+  };
+  invokeScript.onload = () => {
+    console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+    if (callback) callback();
+  };
+  adSlot.appendChild(invokeScript);
+}
+
+function loadProfitRateAd(config, callback) {
+  const adSlot = document.getElementById(config.slotId);
+  if (!adSlot) {
+    console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+    if (callback) callback();
+    return;
+  }
+
+  adSlot.innerHTML = '';
+
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = `//pl26683574.profitableratecpm.com/${config.key}.js`;
+  script.onerror = () => {
+    console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+    adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+    if (callback) callback();
+  };
+  script.onload = () => {
+    console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+    if (callback) callback();
+  };
+  adSlot.appendChild(script);
+}
+
+function loadAd(config, callback) {
+  if (config.network === 'highperformanceformat') {
+    loadHighPerformanceAd(config, callback);
+  } else if (config.network === 'profitableratecpm') {
+    loadProfitRateAd(config, callback);
+  }
+}
+
+function loadAdsWithDelay(configs, index = 0) {
+  if (index >= configs.length) return;
+
+  loadAd(configs[index], () => {
+    setTimeout(() => loadAdsWithDelay(configs, index + 1), loadDelay);
+  });
+}
+
+function displayNextAds() {
+  if (adCount < maxAds) {
+    console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
+    loadAdsWithDelay(adConfigs);
+    adCount++;
+  } else {
+    console.log(`Ad sequence complete at ${new Date().toISOString()}`);
+    clearInterval(adTimer);
+    adConfigs.forEach(config => {
+      const adSlot = document.getElementById(config.slotId);
+      adSlot.innerHTML = '<p>Ad sequence complete.</p>';
+      adSlot.classList.remove('active');
+    });
+  }
+}
+
+if (adConfigs.length > 0) {
+  displayNextAds();
+}
+
+const adTimer = setInterval(displayNextAds, adInterval);
+
+console.log(`Ad script loaded at ${new Date().toISOString()}`);
 </body>
+  
 </html>
