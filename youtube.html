@@ -1,99 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-adsense-account" content="ca-pub-3428561566908674">
   <meta charset="UTF-8">
-  <!-- Responsive Meta Tag -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Educational Videos on YouTube</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* Universal Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f7f7f7;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       color: #333;
       line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
     }
+
+    /* Ad Container and Slots */
+    .ad-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      left: 20px;
+      top: 130px;
+    }
+    .ad-slot {
+      display: none;
+      background: #fff;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .ad-slot.active {
+      display: block;
+    }
+    #newAdSlot {
+      width: 728px;
+      height: 90px;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 0, 0.2); /* Yellow for debugging */
+    }
+    #adSlot1 {
+      width: 300px;
+      height: 250px;
+      background: rgba(255, 0, 0, 0.2); /* Red */
+    }
+    #adSlot2 {
+      width: 160px;
+      height: 600px;
+      background: rgba(0, 255, 0, 0.2); /* Green */
+    }
+    #adSlot3 {
+      width: 320px;
+      height: 50px;
+      background: rgba(0, 0, 255, 0.2); /* Blue */
+    }
+    #profitAdSlot {
+      width: 300px;
+      height: 250px;
+      background: rgba(128, 0, 128, 0.2); /* Purple */
+    }
+    #newAdSlot2 {
+      width: 160px;
+      height: 300px;
+      background: rgba(255, 165, 0, 0.2); /* Orange */
+    }
+    #newAdSlot3 {
+      width: 468px;
+      height: 60px;
+      position: absolute;
+      bottom: 80px; /* Space for footer */
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 255, 255, 0.2); /* Cyan */
+    }
+
     /* Header */
     .header {
-      background: linear-gradient(90deg, #ff4b4b, #e60000);
+      background: linear-gradient(90deg, #ff6b6b, #ee5253);
       color: #fff;
       text-align: center;
-      padding: 30px 20px;
+      padding: 40px 20px;
+      margin-top: 110px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
     .header h1 {
-      font-size: 2em;
+      font-size: 2.5em;
+      font-weight: 600;
     }
+
     /* Container */
     .container {
       max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
+      margin: 30px auto 100px auto;
+      padding: 0 20px 0 360px;
     }
+
     /* Search Section */
     .search-section {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
     }
     .search-section input,
     .search-section select,
     .search-section button {
-      padding: 12px 15px;
-      margin: 5px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+      padding: 12px 20px;
+      margin: 8px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
       font-size: 1em;
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      transition: all 0.3s ease;
     }
     .search-section input:focus,
     .search-section select:focus {
       outline: none;
-      border-color: #e60000;
-      transform: scale(1.02);
+      border-color: #ee5253;
+      box-shadow: 0 0 5px rgba(238, 82, 83, 0.3);
     }
     .search-section button {
-      background-color: #e60000;
+      background-color: #ee5253;
       color: #fff;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-weight: 500;
     }
     .search-section button:hover {
-      background-color: #b30000;
-      transform: scale(1.02);
+      background-color: #d13f40;
+      transform: translateY(-2px);
     }
+    .search-section button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .spinner {
+      display: none;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #ee5253;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    @keyframes spin {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
+
     /* Subject Sections */
     .subject-section {
-      margin-bottom: 60px;
+      margin-bottom: 70px;
     }
     .subject-section h2 {
       margin-bottom: 30px;
       text-align: center;
-      font-size: 1.8em;
+      font-size: 2em;
       color: #444;
+      font-weight: 500;
     }
+
     /* Video Cards */
     .videos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      justify-items: center;
     }
     .video-card {
       width: 320px;
       background: #fff;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
     .video-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     }
     .video-card iframe {
       width: 100%;
@@ -103,18 +201,90 @@
     .video-card p {
       padding: 15px;
       text-align: center;
-      background-color: #fafafa;
+      background: linear-gradient(135deg, #f7f7f7, #e8ecef);
       font-weight: 500;
+      font-size: 0.95em;
+      color: #555;
     }
+
+    /* Footer */
+    .footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.9em;
+    }
+    .footer a {
+      color: #ee5253;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer a:hover {
+      color: #ff8787;
+    }
+
     /* Responsive */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 20px;
+      }
+      .ad-container {
+        display: none; /* Hide sidebar ads on smaller screens */
+      }
+    }
     @media (max-width: 768px) {
-      .videos { flex-direction: column; align-items: center; }
-      .video-card { width: 90%; }
+      .header {
+        margin-top: 110px;
+        padding: 30px 15px;
+      }
+      .header h1 {
+        font-size: 2em;
+      }
+      .search-section {
+        padding: 15px;
+      }
+      .search-section input,
+      .search-section select,
+      .search-section button {
+        width: 100%;
+        margin: 5px 0;
+      }
+      .videos {
+        grid-template-columns: 1fr;
+      }
+      .video-card {
+        width: 100%;
+        max-width: 350px;
+      }
+      #newAdSlot {
+        width: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      #newAdSlot3 {
+        width: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   </style>
-  <script type='text/javascript' src='//pl26683574.profitableratecpm.com/f0/2b/09/f02b091dc81ac646962a1e4fba9ea429.js'></script>
 </head>
 <body>
+  <!-- Ad Slots -->
+  <div id="newAdSlot" class="ad-slot active"></div>
+  <div class="ad-container">
+    <div id="adSlot1" class="ad-slot active"></div>
+    <div id="adSlot2" class="ad-slot active"></div>
+    <div id="adSlot3" class="ad-slot active"></div>
+    <div id="profitAdSlot" class="ad-slot active"></div>
+    <div id="newAdSlot2" class="ad-slot active"></div>
+  </div>
+  <div id="newAdSlot3" class="ad-slot active"></div>
+
   <div class="header">
     <h1>Educational Videos on YouTube</h1>
   </div>
@@ -135,21 +305,36 @@
         <option value="English">English</option>
       </select>
       <button id="searchBtn">Search Videos</button>
+      <div class="spinner" id="spinner"></div>
     </div>
 
+    <!-- Search Functionality -->
     <script>
-      // Perform YouTube search based on query and subject
-      document.getElementById("searchBtn").addEventListener("click", function(){
+      const searchBtn = document.getElementById("searchBtn");
+      const spinner = document.getElementById("spinner");
+
+      searchBtn.addEventListener("click", function() {
         let query = document.getElementById("query").value.trim();
         const subject = document.getElementById("subject").value;
-        if(query === "") return;
-        if(subject) { query += " " + subject; }
-        // Append "educational" for targeted results
+        if (query === "") return;
+
+        // Show spinner and disable button
+        spinner.style.display = "block";
+        searchBtn.disabled = true;
+
+        if (subject) { query += " " + subject; }
         const searchURL = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query + " educational");
-        window.open(searchURL, "_blank");
+
+        // Simulate a delay for UX (since window.open is instant)
+        setTimeout(() => {
+          window.open(searchURL, "_blank");
+          spinner.style.display = "none";
+          searchBtn.disabled = false;
+        }, 1000);
       });
-      document.getElementById("query").addEventListener("keypress", function(event){
-        if(event.key === "Enter"){ document.getElementById("searchBtn").click(); }
+
+      document.getElementById("query").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") { searchBtn.click(); }
       });
     </script>
 
@@ -159,7 +344,7 @@
       <div class="videos">
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/3YQJxvRgxdE" allowfullscreen></iframe>
-          <p>Khan Academy: Algebra</p>
+          <p>Khan Academy: Algebra Basics</p>
         </div>
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/2q0IdZQm44Y" allowfullscreen></iframe>
@@ -173,11 +358,11 @@
       <div class="videos">
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/HEoPUfOp8nI" allowfullscreen></iframe>
-          <p>MinutePhysics: Relativity</p>
+          <p>MinutePhysics: Relativity Explained</p>
         </div>
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/9fTKhUMRWj4" allowfullscreen></iframe>
-          <p>Khan Academy: Newton's Laws</p>
+          <p>Khan Academy: Newton's Laws of Motion</p>
         </div>
       </div>
     </div>
@@ -187,11 +372,11 @@
       <div class="videos">
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/EJZJfH2oCnE" allowfullscreen></iframe>
-          <p>CrashCourse: Chemistry</p>
+          <p>CrashCourse: Introduction to Chemistry</p>
         </div>
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/ya1D_J1YsL0" allowfullscreen></iframe>
-          <p>Khan Academy: Organic Chemistry</p>
+          <p>Khan Academy: Organic Chemistry Basics</p>
         </div>
       </div>
     </div>
@@ -201,190 +386,22 @@
       <div class="videos">
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/zeC3V9I8cSM" allowfullscreen></iframe>
-          <p>CrashCourse: Biology</p>
+          <p>CrashCourse: Biology Fundamentals</p>
         </div>
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/xvszmNXd7r0" allowfullscreen></iframe>
-          <p>Khan Academy: Cell Biology</p>
+          <p>Khan Academy: Cell Biology Overview</p>
         </div>
       </div>
     </div>
-    <!-- Add additional subjects as needed -->
   </div>
-  const adConfigs = [
-  {
-    slotId: 'newAdSlot',
-    key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
-    format: 'iframe',
-    height: 90,
-    width: 728,
-    params: {},
-    network: 'highperformanceformat'
-  },
-  {
-    slotId: 'adSlot1',
-    key: '74caf817ed5b917ef91f9c30f92ac327',
-    format: 'iframe',
-    height: 250,
-    width: 300,
-    params: {},
-    network: 'highperformanceformat'
-  },
-  {
-    slotId: 'adSlot2',
-    key: '0d582796d01fc00d004acc5e06194b52',
-    format: 'iframe',
-    height: 600,
-    width: 160,
-    params: {},
-    network: 'highperformanceformat'
-  },
-  {
-    slotId: 'adSlot3',
-    key: '7651f53528438eccf587c285b3818b43',
-    format: 'iframe',
-    height: 50,
-    width: 320,
-    params: {},
-    network: 'highperformanceformat'
-  },
-  {
-    slotId: 'profitAdSlot',
-    key: 'f02b091dc81ac646962a1e4fba9ea429',
-    network: 'profitableratecpm'
-  },
-  {
-    slotId: 'newAdSlot2',
-    key: '83b113682101cfeedd8174102f412d6f',
-    format: 'iframe',
-    height: 300,
-    width: 160,
-    params: {},
-    network: 'highperformanceformat'
-  },
-  {
-    slotId: 'newAdSlot3',
-    key: '650b4b7c68b9e7f869175d7812827abd',
-    format: 'iframe',
-    height: 60,
-    width: 468,
-    params: {},
-    network: 'highperformanceformat'
-  }
-];
 
-let adCount = 0;
-const maxAds = 20;
-const adInterval = 5 * 1000; // 5 seconds
-const loadDelay = 500; // 500ms delay between each ad load
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2025 Educational Videos. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="contact.html">Contact Us</a></p>
+  </div>
 
-function loadHighPerformanceAd(config, callback) {
-  const adSlot = document.getElementById(config.slotId);
-  if (!adSlot) {
-    console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
-    if (callback) callback();
-    return;
-  }
-
-  adSlot.innerHTML = '';
-
-  const iframe = document.createElement('iframe');
-  iframe.width = config.width;
-  iframe.height = config.height;
-  iframe.frameBorder = '0';
-  iframe.scrolling = 'no';
-
-  const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.text = `atOptions = ${JSON.stringify({
-    key: config.key,
-    format: config.format,
-    height: config.height,
-    width: config.width,
-    params: config.params
-  })};`;
-
-  adSlot.appendChild(script);
-  adSlot.appendChild(iframe);
-  const invokeScript = document.createElement('script');
-  invokeScript.src = adUrl;
-  invokeScript.onerror = () => {
-    console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
-    adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
-    if (callback) callback();
-  };
-  invokeScript.onload = () => {
-    console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
-    if (callback) callback();
-  };
-  adSlot.appendChild(invokeScript);
-}
-
-function loadProfitRateAd(config, callback) {
-  const adSlot = document.getElementById(config.slotId);
-  if (!adSlot) {
-    console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
-    if (callback) callback();
-    return;
-  }
-
-  adSlot.innerHTML = '';
-
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = `//pl26683574.profitableratecpm.com/${config.key}.js`;
-  script.onerror = () => {
-    console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
-    adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
-    if (callback) callback();
-  };
-  script.onload = () => {
-    console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
-    if (callback) callback();
-  };
-  adSlot.appendChild(script);
-}
-
-function loadAd(config, callback) {
-  if (config.network === 'highperformanceformat') {
-    loadHighPerformanceAd(config, callback);
-  } else if (config.network === 'profitableratecpm') {
-    loadProfitRateAd(config, callback);
-  }
-}
-
-function loadAdsWithDelay(configs, index = 0) {
-  if (index >= configs.length) return;
-
-  loadAd(configs[index], () => {
-    setTimeout(() => loadAdsWithDelay(configs, index + 1), loadDelay);
-  });
-}
-
-function displayNextAds() {
-  if (adCount < maxAds) {
-    console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
-    loadAdsWithDelay(adConfigs);
-    adCount++;
-  } else {
-    console.log(`Ad sequence complete at ${new Date().toISOString()}`);
-    clearInterval(adTimer);
-    adConfigs.forEach(config => {
-      const adSlot = document.getElementById(config.slotId);
-      adSlot.innerHTML = '<p>Ad sequence complete.</p>';
-      adSlot.classList.remove('active');
-    });
-  }
-}
-
-if (adConfigs.length > 0) {
-  displayNextAds();
-}
-
-const adTimer = setInterval(displayNextAds, adInterval);
-
-console.log(`Ad script loaded at ${new Date().toISOString()}`);
+  <!-- Include the separate ad script -->
+  <script src="adScript.js"></script>
 </body>
-  
 </html>
