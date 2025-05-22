@@ -19,23 +19,54 @@
       min-height: 100vh;
     }
 
-    /* Ad Container and Slots */
-    .ad-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: absolute;
-      left: 20px;
-      top: 130px;
+    /* Navigation Bar */
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 110px;
+      z-index: 10;
+      padding: 15px 0;
     }
+    .navbar ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 20px;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .navbar a:hover {
+      color: #ee5253;
+    }
+
+    /* Ad Slots */
     .ad-slot {
       display: none;
       background: #fff;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
+      border: 2px dashed #666;
       border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ad-slot::before {
+      content: 'Ad Slot (Not Loaded)';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #666;
+      font-size: 0.9em;
+      display: none;
     }
     .ad-slot.active {
+      display: block;
+    }
+    .ad-slot.active:empty::before {
       display: block;
     }
     #newAdSlot {
@@ -45,41 +76,64 @@
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 0, 0.2); /* Yellow for debugging */
+      background: rgba(255, 255, 0, 0.2);
     }
-    #adSlot1 {
-      width: 300px;
-      height: 250px;
-      background: rgba(255, 0, 0, 0.2); /* Red */
+
+    /* Ad Blocker Notice */
+    .ad-notice {
+      text-align: center;
+      margin: 10px 0;
+      color: #666;
+      font-size: 0.9em;
     }
-    #adSlot2 {
-      width: 160px;
-      height: 600px;
-      background: rgba(0, 255, 0, 0.2); /* Green */
+    .ad-notice a {
+      color: #ee5253;
+      text-decoration: none;
     }
-    #adSlot3 {
-      width: 320px;
-      height: 50px;
-      background: rgba(0, 0, 255, 0.2); /* Blue */
+    .ad-notice a:hover {
+      text-decoration: underline;
     }
-    #profitAdSlot {
-      width: 300px;
-      height: 250px;
-      background: rgba(128, 0, 128, 0.2); /* Purple */
+
+    /* Hosting Notice */
+    .hosting-notice {
+      text-align: center;
+      margin: 10px 0;
+      color: #dc3545;
+      font-size: 0.9em;
     }
-    #newAdSlot2 {
-      width: 160px;
-      height: 300px;
-      background: rgba(255, 165, 0, 0.2); /* Orange */
+    .hosting-notice a {
+      color: #ee5253;
+      text-decoration: none;
     }
-    #newAdSlot3 {
-      width: 468px;
-      height: 60px;
-      position: absolute;
-      bottom: 80px; /* Space for footer */
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 255, 255, 0.2); /* Cyan */
+    .hosting-notice a:hover {
+      text-decoration: underline;
+    }
+
+    /* Debug Section */
+    .debug-section {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .debug-section h3 {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    .debug-section ul {
+      list-style: none;
+    }
+    .debug-section li {
+      padding: 5px 0;
+      font-size: 0.9em;
+    }
+    .debug-section .success {
+      color: #28a745;
+    }
+    .debug-section .error {
+      color: #dc3545;
     }
 
     /* Header */
@@ -100,7 +154,7 @@
     .container {
       max-width: 1200px;
       margin: 30px auto 100px auto;
-      padding: 0 20px 0 360px;
+      padding: 0 20px;
     }
 
     /* Search Section */
@@ -112,16 +166,20 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
     .search-section input,
-    .search-section select,
-    .search-section button {
+    .search-section select {
       padding: 12px 20px;
-      margin: 8px;
       border-radius: 6px;
       border: 1px solid #ddd;
       font-size: 1em;
       transition: all 0.3s ease;
+      flex: 1;
+      min-width: 200px;
     }
     .search-section input:focus,
     .search-section select:focus {
@@ -129,12 +187,38 @@
       border-color: #ee5253;
       box-shadow: 0 0 5px rgba(238, 82, 83, 0.3);
     }
+    .search-section .input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    .search-section .clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ddd;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: none;
+      font-size: 0.8em;
+      color: #666;
+    }
+    .search-section .clear-btn:hover {
+      background: #ccc;
+    }
     .search-section button {
+      padding: 12px 20px;
+      border-radius: 6px;
       background-color: #ee5253;
       color: #fff;
       border: none;
       cursor: pointer;
       font-weight: 500;
+      transition: all 0.3s ease;
     }
     .search-section button:hover {
       background-color: #d13f40;
@@ -152,14 +236,11 @@
       width: 24px;
       height: 24px;
       animation: spin 1s linear infinite;
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
+      margin-left: 10px;
     }
     @keyframes spin {
-      0% { transform: translateY(-50%) rotate(0deg); }
-      100% { transform: translateY(-50%) rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Subject Sections */
@@ -206,6 +287,27 @@
       font-size: 0.95em;
       color: #555;
     }
+    .video-card.hidden {
+      display: none;
+    }
+
+    /* Load More Button */
+    .load-more {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #ee5253;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .load-more:hover {
+      background-color: #d13f40;
+      transform: translateY(-2px);
+    }
 
     /* Footer */
     .footer {
@@ -232,8 +334,8 @@
       .container {
         padding: 0 20px;
       }
-      .ad-container {
-        display: none; /* Hide sidebar ads on smaller screens */
+      .navbar {
+        top: 110px;
       }
     }
     @media (max-width: 768px) {
@@ -244,14 +346,26 @@
       .header h1 {
         font-size: 2em;
       }
+      .navbar {
+        top: 110px;
+      }
+      .navbar ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0 10px;
+      }
       .search-section {
         padding: 15px;
+        flex-direction: column;
       }
       .search-section input,
       .search-section select,
+      .search-section .input-wrapper {
+        width: 100%;
+        min-width: unset;
+      }
       .search-section button {
         width: 100%;
-        margin: 5px 0;
       }
       .videos {
         grid-template-columns: 1fr;
@@ -265,33 +379,50 @@
         left: 50%;
         transform: translateX(-50%);
       }
-      #newAdSlot3 {
-        width: 320px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
   </style>
 </head>
 <body>
   <!-- Ad Slots -->
   <div id="newAdSlot" class="ad-slot active"></div>
-  <div class="ad-container">
-    <div id="adSlot1" class="ad-slot active"></div>
-    <div id="adSlot2" class="ad-slot active"></div>
-    <div id="adSlot3" class="ad-slot active"></div>
-    <div id="profitAdSlot" class="ad-slot active"></div>
-    <div id="newAdSlot2" class="ad-slot active"></div>
+
+  <!-- Ad Blocker Notice -->
+  <div class="ad-notice">
+    Ads not loading? Please disable your ad blocker for this site. <a href="https://www.wikihow.com/Disable-AdBlock" target="_blank">Learn how</a>.
   </div>
-  <div id="newAdSlot3" class="ad-slot active"></div>
+
+  <!-- Hosting Notice -->
+  <div class="hosting-notice">
+    Still no ads? GitHub Pages subdirectories may not be supported. Try moving to the root domain or hosting on <a href="https://www.netlify.com/" target="_blank">Netlify</a> or <a href="https://vercel.com/" target="_blank">Vercel</a>.
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#mathematics">Mathematics</a></li>
+      <li><a href="#physics">Physics</a></li>
+      <li><a href="#chemistry">Chemistry</a></li>
+      <li><a href="#biology">Biology</a></li>
+    </ul>
+  </nav>
 
   <div class="header">
     <h1>Educational Videos on YouTube</h1>
   </div>
+
+  <!-- Debug Section -->
+  <div class="debug-section">
+    <h3>Ad Loading Status</h3>
+    <ul id="debugLog"></ul>
+  </div>
+
   <div class="container">
     <!-- Search Section -->
     <div class="search-section">
-      <input type="text" id="query" placeholder="Enter video topic or keyword" autocomplete="off">
+      <div class="input-wrapper">
+        <input type="text" id="query" placeholder="Enter video topic or keyword" autocomplete="off">
+        <button class="clear-btn" id="clearBtn" title="Clear">✕</button>
+      </div>
       <select id="subject">
         <option value="">All Subjects</option>
         <option value="Mathematics">Mathematics</option>
@@ -311,21 +442,31 @@
     <!-- Search Functionality -->
     <script>
       const searchBtn = document.getElementById("searchBtn");
+      const queryInput = document.getElementById("query");
+      const clearBtn = document.getElementById("clearBtn");
       const spinner = document.getElementById("spinner");
 
+      queryInput.addEventListener("input", function() {
+        clearBtn.style.display = queryInput.value ? "block" : "none";
+      });
+
+      clearBtn.addEventListener("click", function() {
+        queryInput.value = "";
+        clearBtn.style.display = "none";
+        queryInput.focus();
+      });
+
       searchBtn.addEventListener("click", function() {
-        let query = document.getElementById("query").value.trim();
+        let query = queryInput.value.trim();
         const subject = document.getElementById("subject").value;
         if (query === "") return;
 
-        // Show spinner and disable button
         spinner.style.display = "block";
         searchBtn.disabled = true;
 
         if (subject) { query += " " + subject; }
         const searchURL = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query + " educational");
 
-        // Simulate a delay for UX (since window.open is instant)
         setTimeout(() => {
           window.open(searchURL, "_blank");
           spinner.style.display = "none";
@@ -333,13 +474,13 @@
         }, 1000);
       });
 
-      document.getElementById("query").addEventListener("keypress", function(event) {
+      queryInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") { searchBtn.click(); }
       });
     </script>
 
     <!-- Curated Video Sections -->
-    <div class="subject-section">
+    <div class="subject-section" id="mathematics">
       <h2>Mathematics</h2>
       <div class="videos">
         <div class="video-card">
@@ -350,10 +491,15 @@
           <iframe src="https://www.youtube.com/embed/2q0IdZQm44Y" allowfullscreen></iframe>
           <p>3Blue1Brown: Essence of Linear Algebra</p>
         </div>
+        <div class="video-card hidden">
+          <iframe src="https://www.youtube.com/embed/zxCIX7gIifM" allowfullscreen></iframe>
+          <p>Numberphile: The Most Beautiful Equation</p>
+        </div>
       </div>
+      <button class="load-more" data-section="mathematics">Load More</button>
     </div>
 
-    <div class="subject-section">
+    <div class="subject-section" id="physics">
       <h2>Physics</h2>
       <div class="videos">
         <div class="video-card">
@@ -364,10 +510,15 @@
           <iframe src="https://www.youtube.com/embed/9fTKhUMRWj4" allowfullscreen></iframe>
           <p>Khan Academy: Newton's Laws of Motion</p>
         </div>
+        <div class="video-card hidden">
+          <iframe src="https://www.youtube.com/embed/Q1YqgPAtzho" allowfullscreen></iframe>
+          <p>Veritasium: Quantum Entanglement</p>
+        </div>
       </div>
+      <button class="load-more" data-section="physics">Load More</button>
     </div>
 
-    <div class="subject-section">
+    <div class="subject-section" id="chemistry">
       <h2>Chemistry</h2>
       <div class="videos">
         <div class="video-card">
@@ -378,10 +529,15 @@
           <iframe src="https://www.youtube.com/embed/ya1D_J1YsL0" allowfullscreen></iframe>
           <p>Khan Academy: Organic Chemistry Basics</p>
         </div>
+        <div class="video-card hidden">
+          <iframe src="https://www.youtube.com/embed/FSyAehMdpyI" allowfullscreen></iframe>
+          <p>Periodic Videos: The Periodic Table</p>
+        </div>
       </div>
+      <button class="load-more" data-section="chemistry">Load More</button>
     </div>
 
-    <div class="subject-section">
+    <div class="subject-section" id="biology">
       <h2>Biology</h2>
       <div class="videos">
         <div class="video-card">
@@ -392,16 +548,55 @@
           <iframe src="https://www.youtube.com/embed/xvszmNXd7r0" allowfullscreen></iframe>
           <p>Khan Academy: Cell Biology Overview</p>
         </div>
+        <div class="video-card hidden">
+          <iframe src="https://www.youtube.com/embed/8IlzKri08kk" allowfullscreen></iframe>
+          <p>Bozeman Science: DNA Replication</p>
+        </div>
       </div>
+      <button class="load-more" data-section="biology">Load More</button>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>&copy; 2025 Educational Videos. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="contact.html">Contact Us</a></p>
+    <p>© 2025 Educational Videos. All rights reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="contact.html">Contact Us</a></p>
   </div>
 
-  <!-- Include the separate ad script -->
+  <!-- Include the separate ad script and debug logging -->
   <script src="adScript.js"></script>
+  <script>
+    // Debug logging for ad loading
+    const debugLog = document.getElementById("debugLog");
+    const originalConsoleLog = console.log;
+    const originalConsoleError = console.error;
+
+    console.log = function(message) {
+      originalConsoleLog.apply(console, arguments);
+      const li = document.createElement("li");
+      li.textContent = message;
+      li.classList.add("success");
+      debugLog.appendChild(li);
+    };
+
+    console.error = function(message) {
+      originalConsoleError.apply(console, arguments);
+      const li = document.createElement("li");
+      li.textContent = message;
+      li.classList.add("error");
+      debugLog.appendChild(li);
+    };
+
+    // Load More functionality
+    document.querySelectorAll(".load-more").forEach(button => {
+      button.addEventListener("click", function() {
+        const section = this.getAttribute("data-section");
+        const hiddenVideos = document.querySelectorAll(`#${section} .video-card.hidden`);
+        hiddenVideos.forEach(video => {
+          video.classList.remove("hidden");
+        });
+        this.style.display = "none";
+      });
+    });
+  </script>
 </body>
 </html>
