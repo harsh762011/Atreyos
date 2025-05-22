@@ -11,6 +11,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       min-height: 100vh;
+      position: relative;
     }
     .ad-container {
       display: flex;
@@ -18,7 +19,7 @@
       align-items: flex-start;
       position: absolute;
       left: 20px;
-      top: 130px; /* Space for newAdSlot at the top (90px height + 20px top + 20px buffer) */
+      top: 130px;
     }
     .container {
       background: rgba(255,255,255,0.9);
@@ -26,7 +27,7 @@
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       width: 350px;
-      margin: 20px 20px 20px 500px;
+      margin: 20px 20px 80px 500px;
     }
     .container h1 {
       text-align: center;
@@ -79,7 +80,7 @@
       display: none;
       background: #fff;
       margin-bottom: 20px;
-      border: 1px solid #ccc; /* For visibility */
+      border: 1px solid #ccc;
     }
     .ad-slot.active {
       display: block;
@@ -91,29 +92,52 @@
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 0, 0.2); /* Debug color: yellow */
+      background: rgba(255, 255, 0, 0.2); /* Yellow */
     }
     #adSlot1 {
       width: 300px;
       height: 250px;
-      background: rgba(255, 0, 0, 0.2); /* Debug color: red */
+      background: rgba(255, 0, 0, 0.2); /* Red */
     }
     #adSlot2 {
       width: 160px;
       height: 600px;
-      background: rgba(0, 255, 0, 0.2); /* Debug color: green */
+      background: rgba(0, 255, 0, 0.2); /* Green */
     }
     #adSlot3 {
       width: 320px;
       height: 50px;
-      background: rgba(0, 0, 255, 0.2); /* Debug color: blue */
+      background: rgba(0, 0, 255, 0.2); /* Blue */
     }
-    /* Responsive adjustments */
+    #profitAdSlot {
+      width: 300px;
+      height: 250px;
+      background: rgba(128, 0, 128, 0.2); /* Purple */
+    }
+    #newAdSlot2 {
+      width: 160px;
+      height: 300px;
+      background: rgba(255, 165, 0, 0.2); /* Orange */
+    }
+    #newAdSlot3 {
+      width: 468px;
+      height: 60px;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 255, 255, 0.2); /* Cyan */
+    }
     @media (max-width: 768px) {
       .container {
         margin: 20px;
       }
       #newAdSlot {
+        width: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      #newAdSlot3 {
         width: 320px;
         left: 50%;
         transform: translateX(-50%);
@@ -131,6 +155,12 @@
       #adSlot3 {
         width: 320px;
       }
+      #profitAdSlot {
+        width: 300px;
+      }
+      #newAdSlot2 {
+        width: 160px;
+      }
     }
   </style>
 </head>
@@ -140,7 +170,10 @@
     <div id="adSlot1" class="ad-slot active"></div>
     <div id="adSlot2" class="ad-slot active"></div>
     <div id="adSlot3" class="ad-slot active"></div>
+    <div id="profitAdSlot" class="ad-slot active"></div>
+    <div id="newAdSlot2" class="ad-slot active"></div>
   </div>
+  <div id="newAdSlot3" class="ad-slot active"></div>
 
   <div class="container">
     <h1>Welcome to the Home Page</h1>
@@ -174,7 +207,8 @@
         format: 'iframe',
         height: 90,
         width: 728,
-        params: {}
+        params: {},
+        network: 'highperformanceformat'
       },
       {
         slotId: 'adSlot1',
@@ -182,7 +216,8 @@
         format: 'iframe',
         height: 250,
         width: 300,
-        params: {}
+        params: {},
+        network: 'highperformanceformat'
       },
       {
         slotId: 'adSlot2',
@@ -190,7 +225,8 @@
         format: 'iframe',
         height: 600,
         width: 160,
-        params: {}
+        params: {},
+        network: 'highperformanceformat'
       },
       {
         slotId: 'adSlot3',
@@ -198,16 +234,40 @@
         format: 'iframe',
         height: 50,
         width: 320,
-        params: {}
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'profitAdSlot',
+        key: 'f02b091dc81ac646962a1e4fba9ea429',
+        network: 'profitableratecpm'
+      },
+      {
+        slotId: 'newAdSlot2',
+        key: '83b113682101cfeedd8174102f412d6f',
+        format: 'iframe',
+        height: 300,
+        width: 160,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'newAdSlot3',
+        key: '650b4b7c68b9e7f869175d7812827abd',
+        format: 'iframe',
+        height: 60,
+        width: 468,
+        params: {},
+        network: 'highperformanceformat'
       }
     ];
 
     let adCount = 0;
     const maxAds = 20;
-    const adInterval = 5 * 1000; // 5 seconds
+    const adInterval = 5 * 1000; // Reverted to 5 seconds as requested
     const loadDelay = 500; // 500ms delay between each ad load
 
-    function loadAd(config, callback) {
+    function loadHighPerformanceAd(config, callback) {
       const adSlot = document.getElementById(config.slotId);
       if (!adSlot) {
         console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
@@ -226,22 +286,61 @@
       const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.text = `atOptions = ${JSON.stringify(config)};`;
+      script.text = `atOptions = ${JSON.stringify({
+        key: config.key,
+        format: config.format,
+        height: config.height,
+        width: config.width,
+        params: config.params
+      })};`;
 
       adSlot.appendChild(script);
       adSlot.appendChild(iframe);
       const invokeScript = document.createElement('script');
       invokeScript.src = adUrl;
       invokeScript.onerror = () => {
-        console.error(`Failed to load ad in ${config.slotId} at ${new Date().toISOString()}`);
+        console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
         adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
         if (callback) callback();
       };
       invokeScript.onload = () => {
-        console.log(`Ad loaded in ${config.slotId} at ${new Date().toISOString()}`);
+        console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
         if (callback) callback();
       };
       adSlot.appendChild(invokeScript);
+    }
+
+    function loadProfitRateAd(config, callback) {
+      const adSlot = document.getElementById(config.slotId);
+      if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+        if (callback) callback();
+        return;
+      }
+
+      adSlot.innerHTML = '';
+
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `//pl26683574.profitableratecpm.com/${config.key}.js`;
+      script.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+        if (callback) callback();
+      };
+      script.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        if (callback) callback();
+      };
+      adSlot.appendChild(script);
+    }
+
+    function loadAd(config, callback) {
+      if (config.network === 'highperformanceformat') {
+        loadHighPerformanceAd(config, callback);
+      } else if (config.network === 'profitableratecpm') {
+        loadProfitRateAd(config, callback);
+      }
     }
 
     function loadAdsWithDelay(configs, index = 0) {
@@ -273,6 +372,8 @@
     }
 
     const adTimer = setInterval(displayNextAds, adInterval);
+
+    console.log(`Page loaded at ${new Date().toISOString()}`);
   </script>
 </body>
 </html>
