@@ -18,7 +18,7 @@
       align-items: flex-start;
       position: absolute;
       left: 20px;
-      top: 20px;
+      top: 130px; /* Space for newAdSlot at the top (90px height + 20px top + 20px buffer) */
     }
     .container {
       background: rgba(255,255,255,0.9);
@@ -79,25 +79,63 @@
       display: none;
       background: #fff;
       margin-bottom: 20px;
+      border: 1px solid #ccc; /* For visibility */
     }
     .ad-slot.active {
       display: block;
     }
+    #newAdSlot {
+      width: 728px;
+      height: 90px;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 0, 0.2); /* Debug color: yellow */
+    }
     #adSlot1 {
       width: 300px;
       height: 250px;
+      background: rgba(255, 0, 0, 0.2); /* Debug color: red */
     }
     #adSlot2 {
       width: 160px;
       height: 600px;
+      background: rgba(0, 255, 0, 0.2); /* Debug color: green */
     }
     #adSlot3 {
       width: 320px;
       height: 50px;
+      background: rgba(0, 0, 255, 0.2); /* Debug color: blue */
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+      }
+      #newAdSlot {
+        width: 320px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .ad-container {
+        top: 130px;
+        left: 10px;
+      }
+      #adSlot1 {
+        width: 300px;
+      }
+      #adSlot2 {
+        width: 160px;
+      }
+      #adSlot3 {
+        width: 320px;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="newAdSlot" class="ad-slot active"></div>
   <div class="ad-container">
     <div id="adSlot1" class="ad-slot active"></div>
     <div id="adSlot2" class="ad-slot active"></div>
@@ -131,6 +169,14 @@
   <script>
     const adConfigs = [
       {
+        slotId: 'newAdSlot',
+        key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
+        format: 'iframe',
+        height: 90,
+        width: 728,
+        params: {}
+      },
+      {
         slotId: 'adSlot1',
         key: '74caf817ed5b917ef91f9c30f92ac327',
         format: 'iframe',
@@ -158,12 +204,13 @@
 
     let adCount = 0;
     const maxAds = 20;
-    const adInterval = 30 * 1000;
+    const adInterval = 5 * 1000; // 5 seconds
     const loadDelay = 500; // 500ms delay between each ad load
 
     function loadAd(config, callback) {
       const adSlot = document.getElementById(config.slotId);
       if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
         if (callback) callback();
         return;
       }
@@ -186,10 +233,12 @@
       const invokeScript = document.createElement('script');
       invokeScript.src = adUrl;
       invokeScript.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} at ${new Date().toISOString()}`);
         adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
         if (callback) callback();
       };
       invokeScript.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} at ${new Date().toISOString()}`);
         if (callback) callback();
       };
       adSlot.appendChild(invokeScript);
@@ -205,9 +254,11 @@
 
     function displayNextAds() {
       if (adCount < maxAds) {
+        console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
         loadAdsWithDelay(adConfigs);
         adCount++;
       } else {
+        console.log(`Ad sequence complete at ${new Date().toISOString()}`);
         clearInterval(adTimer);
         adConfigs.forEach(config => {
           const adSlot = document.getElementById(config.slotId);
