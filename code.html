@@ -69,6 +69,58 @@
       outline: 2px solid #b30000;
       outline-offset: 2px;
     }
+    /* Ad slot styles (for visibility during testing) */
+    .ad-slot {
+      display: none;
+      background: #fff;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+    .ad-slot.active {
+      display: block;
+    }
+    #container-edeaa5234b144caee3318cf798e427a1 {
+      width: 300px;
+      height: 250px;
+      background: rgba(255, 0, 0, 0.2); /* Red */
+      margin: 20px auto;
+    }
+    #ad-container-1 {
+      width: 320px;
+      height: 50px;
+      background: rgba(0, 255, 0, 0.2); /* Green */
+      margin: 20px auto;
+    }
+    #ad-container-2 {
+      width: 468px;
+      height: 60px;
+      background: rgba(0, 0, 255, 0.2); /* Blue */
+      margin: 20px auto;
+    }
+    #ad-container-3 {
+      width: 160px;
+      height: 300px;
+      background: rgba(255, 165, 0, 0.2); /* Orange */
+      margin: 20px auto;
+    }
+    #ad-container-4 {
+      width: 160px;
+      height: 600px;
+      background: rgba(0, 255, 255, 0.2); /* Cyan */
+      margin: 20px auto;
+    }
+    #ad-container-5 {
+      width: 728px;
+      height: 90px;
+      background: rgba(255, 255, 0, 0.2); /* Yellow */
+      margin: 20px auto;
+    }
+    #ad-container-6 {
+      width: 300px;
+      height: 250px;
+      background: rgba(128, 0, 128, 0.2); /* Purple */
+      margin: 20px auto;
+    }
     @media (max-width: 600px) {
       #testCodes {
         grid-template-columns: 1fr;
@@ -77,9 +129,17 @@
         width: 100%;
         margin: 10px 0;
       }
+      #container-edeaa5234b144caee3318cf798e427a1,
+      #ad-container-1,
+      #ad-container-2,
+      #ad-container-3,
+      #ad-container-4,
+      #ad-container-5,
+      #ad-container-6 {
+        width: 100%;
+      }
     }
   </style>
-  <script type='text/javascript' src='//pl26683574.profitableratecpm.com/f0/2b/09/f02b091dc81ac646962a1e4fba9ea429.js'></script>
 </head>
 <body>
   <h1>Select Test Codes</h1>
@@ -89,6 +149,15 @@
     <button onclick="saveSelectedCodes()" aria-label="Save selected test codes and proceed to test">Save Selected Codes</button>
     <button onclick="clearSelections()" aria-label="Clear all selected test codes">Clear All</button>
   </div>
+
+  <!-- General Ad Containers (refresh every 5 seconds) -->
+  <div id="container-edeaa5234b144caee3318cf798e427a1" class="ad-slot active"></div>
+  <div id="ad-container-1" class="ad-slot active"></div>
+  <div id="ad-container-2" class="ad-slot active"></div>
+  <div id="ad-container-3" class="ad-slot active"></div>
+  <div id="ad-container-4" class="ad-slot active"></div>
+  <div id="ad-container-5" class="ad-slot active"></div>
+  <div id="ad-container-6" class="ad-slot active"></div>
 
   <script>
     const testGroups = [
@@ -361,13 +430,203 @@
       });
     }
 
-    try {
-      displayTestCodes();
-    } catch (e) {
-      console.error("Error initializing test codes:", e);
+    // Ad configurations for general ads (refresh every 5 seconds)
+    const adConfigs = [
+      {
+        slotId: 'container-edeaa5234b144caee3318cf798e427a1',
+        key: 'edeaa5234b144caee3318cf798e427a1',
+        network: 'profitableratecpm'
+      },
+      {
+        slotId: 'ad-container-1',
+        key: '7651f53528438eccf587c285b3818b43',
+        format: 'iframe',
+        height: 50,
+        width: 320,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-2',
+        key: '650b4b7c68b9e7f869175d7812827abd',
+        format: 'iframe',
+        height: 60,
+        width: 468,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-3',
+        key: '83b113682101cfeedd8174102f412d6f',
+        format: 'iframe',
+        height: 300,
+        width: 160,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-4',
+        key: '0d582796d01fc00d004acc5e06194b52',
+        format: 'iframe',
+        height: 600,
+        width: 160,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-5',
+        key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
+        format: 'iframe',
+        height: 90,
+        width: 728,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-6',
+        key: '74caf817ed5b917ef91f9c30f92ac327',
+        format: 'iframe',
+        height: 250,
+        width: 300,
+        params: {},
+        network: 'highperformanceformat'
+      }
+    ];
+
+    let adCount = 0;
+    const maxAds = 20; // Maximum number of ad cycles
+    const adInterval = 5 * 1000; // 5 seconds for general ads
+    const loadDelay = 500; // 500ms delay between each ad load
+
+    function loadHighPerformanceAd(config, callback) {
+      const adSlot = document.getElementById(config.slotId);
+      if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+        if (callback) callback();
+        return;
+      }
+
+      adSlot.innerHTML = '';
+      adSlot.classList.add('active');
+
+      const iframe = document.createElement('iframe');
+      iframe.width = config.width;
+      iframe.height = config.height;
+      iframe.frameBorder = '0';
+      iframe.scrolling = 'no';
+
+      const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.text = `atOptions = ${JSON.stringify({
+        key: config.key,
+        format: config.format,
+        height: config.height,
+        width: config.width,
+        params: config.params
+      })};`;
+
+      adSlot.appendChild(script);
+      adSlot.appendChild(iframe);
+      const invokeScript = document.createElement('script');
+      invokeScript.src = adUrl;
+      invokeScript.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+        if (callback) callback();
+      };
+      invokeScript.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+        if (callback) callback();
+      };
+      adSlot.appendChild(invokeScript);
     }
+
+    function loadProfitRateAd(config, callback) {
+      const adSlot = document.getElementById(config.slotId);
+      if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+        if (callback) callback();
+        return;
+      }
+
+      adSlot.innerHTML = '';
+      adSlot.classList.add('active');
+
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `//pl26683677.profitableratecpm.com/${config.key}/invoke.js`;
+      script.async = true;
+      script.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+        if (callback) callback();
+      };
+      script.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        if (callback) callback();
+      };
+      adSlot.appendChild(script);
+    }
+
+    function loadAd(config, callback) {
+      if (config.network === 'highperformanceformat') {
+        loadHighPerformanceAd(config, callback);
+      } else if (config.network === 'profitableratecpm') {
+        loadProfitRateAd(config, callback);
+      }
+    }
+
+    function loadAdsWithDelay(configs, index = 0) {
+      if (index >= configs.length) return;
+
+      loadAd(configs[index], () => {
+        setTimeout(() => loadAdsWithDelay(configs, index + 1), loadDelay);
+      });
+    }
+
+    function displayNextAds() {
+      if (adCount < maxAds) {
+        console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
+        loadAdsWithDelay(adConfigs);
+        adCount++;
+      } else {
+        console.log(`Ad sequence complete at ${new Date().toISOString()}`);
+        clearInterval(adTimer);
+        adConfigs.forEach(config => {
+          const adSlot = document.getElementById(config.slotId);
+          adSlot.innerHTML = '<p>Ad sequence complete.</p>';
+          adSlot.classList.remove('active');
+        });
+      }
+    }
+
+    window.onload = function() {
+      try {
+        displayTestCodes();
+      } catch (e) {
+        console.error("Error initializing test codes:", e);
+      }
+
+      // Initial ad loads
+      if (adConfigs.length > 0) {
+        displayNextAds();
+      }
+
+      // Log all scripts to confirm ad scripts are loading
+      const scripts = document.getElementsByTagName('script');
+      console.log('All scripts on page at load:');
+      for (let script of scripts) {
+        if (script.src) {
+          console.log(script.src);
+        }
+      }
+    };
+
+    // Refresh general ads every 5 seconds
+    const adTimer = setInterval(displayNextAds, adInterval);
+
+    console.log(`Page loaded at ${new Date().toISOString()}`);
   </script>
-  <script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
-<div id="container-edeaa5234b144caee3318cf798e427a1"></div>
 </body>
 </html>
