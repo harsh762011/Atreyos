@@ -50,6 +50,51 @@
     button:hover {
       background-color: #ff1a1a;
     }
+    /* Ad slot styles (for visibility during testing) */
+    .ad-slot {
+      display: none;
+      background: #fff;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+    .ad-slot.active {
+      display: block;
+    }
+    #container-edeaa5234b144caee3318cf798e427a1 {
+      width: 300px;
+      height: 250px;
+      background: rgba(255, 0, 0, 0.2); /* Red */
+    }
+    #ad-container-1 {
+      width: 320px;
+      height: 50px;
+      background: rgba(0, 255, 0, 0.2); /* Green */
+    }
+    #ad-container-2 {
+      width: 468px;
+      height: 60px;
+      background: rgba(0, 0, 255, 0.2); /* Blue */
+    }
+    #ad-container-3 {
+      width: 160px;
+      height: 300px;
+      background: rgba(255, 165, 0, 0.2); /* Orange */
+    }
+    #ad-container-4 {
+      width: 160px;
+      height: 600px;
+      background: rgba(0, 255, 255, 0.2); /* Cyan */
+    }
+    #ad-container-5 {
+      width: 728px;
+      height: 90px;
+      background: rgba(255, 255, 0, 0.2); /* Yellow */
+    }
+    #ad-container-6 {
+      width: 300px;
+      height: 250px;
+      background: rgba(128, 0, 128, 0.2); /* Purple */
+    }
   </style>
   <!-- Include Chart.js library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -99,11 +144,8 @@
         }
       });
 
-      // Calculate total score
-      // Each correct answer: +10 marks, each wrong answer: -5 marks, each left: -4 marks
       const totalScore = (correctCount * 10) - (wrongCount * 5) - (leftCount * 4);
 
-      // Display summary
       summaryContainer.innerHTML = `
         <p><strong>Total Questions:</strong> ${testQuestions.length}</p>
         <p><strong>Correct Answers:</strong> <span class="correct">${correctCount}</span></p>
@@ -112,7 +154,6 @@
         <p><strong>Total Score:</strong> ${totalScore}</p>
       `;
 
-      // Handle empty sections
       if (!wrongQuestionsContainer.innerHTML.trim()) {
         wrongQuestionsContainer.innerHTML = "<p>No wrong answers. Great job!</p>";
       }
@@ -122,10 +163,9 @@
     }
 
     function retakeTest() {
-      window.location.href = 'test.html'; // Update the path to your test page if needed
+      window.location.href = 'test.html';
     }
 
-    // Returns dummy progress data based on the selected time period
     function getProgressData(period) {
       let labels = [];
       let data = [];
@@ -145,13 +185,11 @@
       return { labels, data };
     }
 
-    // Draw or update the line and bar charts using Chart.js
     function drawCharts() {
       const periodSelect = document.getElementById('timePeriodSelect');
       const period = periodSelect.value;
       const progress = getProgressData(period);
 
-      // Line Chart
       const lineCtx = document.getElementById('lineChart').getContext('2d');
       if (lineChart) {
         lineChart.destroy();
@@ -177,7 +215,6 @@
         }
       });
 
-      // Bar Chart
       const barCtx = document.getElementById('barChart').getContext('2d');
       if (barChart) {
         barChart.destroy();
@@ -201,12 +238,200 @@
       });
     }
 
+    // Ad configurations for general ads (refresh every 5 seconds)
+    const adConfigs = [
+      {
+        slotId: 'container-edeaa5234b144caee3318cf798e427a1',
+        key: 'edeaa5234b144caee3318cf798e427a1',
+        network: 'profitableratecpm'
+      },
+      {
+        slotId: 'ad-container-1',
+        key: '7651f53528438eccf587c285b3818b43',
+        format: 'iframe',
+        height: 50,
+        width: 320,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-2',
+        key: '650b4b7c68b9e7f869175d7812827abd',
+        format: 'iframe',
+        height: 60,
+        width: 468,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-3',
+        key: '83b113682101cfeedd8174102f412d6f',
+        format: 'iframe',
+        height: 300,
+        width: 160,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-4',
+        key: '0d582796d01fc00d004acc5e06194b52',
+        format: 'iframe',
+        height: 600,
+        width: 160,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-5',
+        key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
+        format: 'iframe',
+        height: 90,
+        width: 728,
+        params: {},
+        network: 'highperformanceformat'
+      },
+      {
+        slotId: 'ad-container-6',
+        key: '74caf817ed5b917ef91f9c30f92ac327',
+        format: 'iframe',
+        height: 250,
+        width: 300,
+        params: {},
+        network: 'highperformanceformat'
+      }
+    ];
+
+    let adCount = 0;
+    const maxAds = 20; // Maximum number of ad cycles
+    const adInterval = 5 * 1000; // 5 seconds for general ads
+    const loadDelay = 500; // 500ms delay between each ad load
+
+    function loadHighPerformanceAd(config, callback) {
+      const adSlot = document.getElementById(config.slotId);
+      if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+        if (callback) callback();
+        return;
+      }
+
+      adSlot.innerHTML = '';
+      adSlot.classList.add('active');
+
+      const iframe = document.createElement('iframe');
+      iframe.width = config.width;
+      iframe.height = config.height;
+      iframe.frameBorder = '0';
+      iframe.scrolling = 'no';
+
+      const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.text = `atOptions = ${JSON.stringify({
+        key: config.key,
+        format: config.format,
+        height: config.height,
+        width: config.width,
+        params: config.params
+      })};`;
+
+      adSlot.appendChild(script);
+      adSlot.appendChild(iframe);
+      const invokeScript = document.createElement('script');
+      invokeScript.src = adUrl;
+      invokeScript.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+        if (callback) callback();
+      };
+      invokeScript.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
+        if (callback) callback();
+      };
+      adSlot.appendChild(invokeScript);
+    }
+
+    function loadProfitRateAd(config, callback) {
+      const adSlot = document.getElementById(config.slotId);
+      if (!adSlot) {
+        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
+        if (callback) callback();
+        return;
+      }
+
+      adSlot.innerHTML = '';
+      adSlot.classList.add('active');
+
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `//pl26683677.profitableratecpm.com/${config.key}/invoke.js`;
+      script.onerror = () => {
+        console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
+        if (callback) callback();
+      };
+      script.onload = () => {
+        console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
+        if (callback) callback();
+      };
+      adSlot.appendChild(script);
+    }
+
+    function loadAd(config, callback) {
+      if (config.network === 'highperformanceformat') {
+        loadHighPerformanceAd(config, callback);
+      } else if (config.network === 'profitableratecpm') {
+        loadProfitRateAd(config, callback);
+      }
+    }
+
+    function loadAdsWithDelay(configs, index = 0) {
+      if (index >= configs.length) return;
+
+      loadAd(configs[index], () => {
+        setTimeout(() => loadAdsWithDelay(configs, index + 1), loadDelay);
+      });
+    }
+
+    function displayNextAds() {
+      if (adCount < maxAds) {
+        console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
+        loadAdsWithDelay(adConfigs);
+        adCount++;
+      } else {
+        console.log(`Ad sequence complete at ${new Date().toISOString()}`);
+        clearInterval(adTimer);
+        adConfigs.forEach(config => {
+          const adSlot = document.getElementById(config.slotId);
+          adSlot.innerHTML = '<p>Ad sequence complete.</p>';
+          adSlot.classList.remove('active');
+        });
+      }
+    }
+
     window.onload = function() {
       loadResults();
       drawCharts();
-      // Update charts when time period selection changes
       document.getElementById('timePeriodSelect').addEventListener('change', drawCharts);
+
+      // Initial ad loads
+      if (adConfigs.length > 0) {
+        displayNextAds();
+      }
+
+      // Log all scripts to confirm no other ad scripts are present
+      const scripts = document.getElementsByTagName('script');
+      console.log('All scripts on page at load:');
+      for (let script of scripts) {
+        if (script.src) {
+          console.log(script.src);
+        }
+      }
     };
+
+    // Refresh general ads every 5 seconds
+    const adTimer = setInterval(displayNextAds, adInterval);
+
+    console.log(`Page loaded at ${new Date().toISOString()}`);
   </script>
 </head>
 <body>
@@ -215,7 +440,6 @@
   <!-- Summary Section -->
   <div id="summary" class="summary">
     <h2>Summary</h2>
-    <!-- Summary content will be populated by JavaScript -->
   </div>
 
   <!-- Wrong Questions Section -->
@@ -252,68 +476,15 @@
 
   <!-- Retake Test Button -->
   <button onclick="retakeTest()">Retake Test</button>
-  <script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
-<div id="container-edeaa5234b144caee3318cf798e427a1"></div>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : '7651f53528438eccf587c285b3818b43',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/7651f53528438eccf587c285b3818b43/invoke.js"></script>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : '650b4b7c68b9e7f869175d7812827abd',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/650b4b7c68b9e7f869175d7812827abd/invoke.js"></script>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : '83b113682101cfeedd8174102f412d6f',
-		'format' : 'iframe',
-		'height' : 300,
-		'width' : 160,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/83b113682101cfeedd8174102f412d6f/invoke.js"></script>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : '0d582796d01fc00d004acc5e06194b52',
-		'format' : 'iframe',
-		'height' : 600,
-		'width' : 160,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/0d582796d01fc00d004acc5e06194b52/invoke.js"></script>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : 'aba8d4cd09a12eca86e37fa21c9cbfc0',
-		'format' : 'iframe',
-		'height' : 90,
-		'width' : 728,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/aba8d4cd09a12eca86e37fa21c9cbfc0/invoke.js"></script>
-  <script type='text/javascript' src='//pl26683914.profitableratecpm.com/9b/fa/79/9bfa79a1ffc298e9654ecdd6866ebec2.js'></script>
-  <script type="text/javascript">
-	atOptions = {
-		'key' : '74caf817ed5b917ef91f9c30f92ac327',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/74caf817ed5b917ef91f9c30f92ac327/invoke.js"></script>
+
+  <!-- General Ad Containers (refresh every 5 seconds) -->
+  <div id="container-edeaa5234b144caee3318cf798e427a1" class="ad-slot active"></div>
+  <div id="ad-container-1" class="ad-slot active"></div>
+  <div id="ad-container-2" class="ad-slot active"></div>
+  <div id="ad-container-3" class="ad-slot active"></div>
+  <div id="ad-container-4" class="ad-slot active"></div>
+  <div id="ad-container-5" class="ad-slot active"></div>
+  <div id="ad-container-6" class="ad-slot active"></div>
+	<script type='text/javascript' src='//pl26683914.profitableratecpm.com/9b/fa/79/9bfa79a1ffc298e9654ecdd6866ebec2.js'></script>
 </body>
 </html>
