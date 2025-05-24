@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta name="google-adsense-account" content="ca-pub-3428561566908674">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,6 +149,8 @@
       window.location.href = 'test2.html'; // Update the path to your test page if necessary
     }
   </script>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+
 </head>
 <body onload="loadResults()">
   <div class="container">
@@ -174,5 +177,11 @@
     <!-- Retake Test Button -->
     <button onclick="retakeTest()">Retake Test</button>
   </div>
+  <script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: '4e2l8lr1ls',
+    });
+</script>
+
 </body>
 </html>
