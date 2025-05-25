@@ -1,393 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+    <meta charset="UTF-8">
+    <title>Stylish Home Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
 
-  <meta charset="UTF-8">
-  <title>Home Page with Cycling Ads</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      min-height: 100vh;
-      position: relative;
-    }
-    .ad-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: absolute;
-      left: 20px;
-      top: 130px;
-    }
-    .container {
-      background: rgba(255,255,255,0.9);
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      width: 350px;
-      margin: 20px 20px 80px 500px;
-    }
-    .container h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #333;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-    .section h2 {
-      margin-bottom: 15px;
-      color: #444;
-      border-bottom: 2px solid #ff6f61;
-      padding-bottom: 5px;
-      font-size: 1.2em;
-    }
-    .section a {
-      display: block;
-      text-decoration: none;
-      color: #fff;
-      background: #ff6f61;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 5px;
-      text-align: center;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .section a:hover {
-      background: #ff3b2e;
-      transform: translateY(-3px);
-    }
-    .navbar {
-      margin: 20px 0;
-      text-align: center;
-    }
-    .navbar a {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      background: #444;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-    .navbar a:hover {
-      background: #222;
-    }
-    .ad-slot {
-      display: none;
-      background: #fff;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-    }
-    .ad-slot.active {
-      display: block;
-    }
-    #newAdSlot {
-      width: 728px;
-      height: 90px;
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 0, 0.2); /* Yellow */
-    }
-    #adSlot1 {
-      width: 300px;
-      height: 250px;
-      background: rgba(255, 0, 0, 0.2); /* Red */
-    }
-    #adSlot2 {
-      width: 160px;
-      height: 600px;
-      background: rgba(0, 255, 0, 0.2); /* Green */
-    }
-    #adSlot3 {
-      width: 320px;
-      height: 50px;
-      background: rgba(0, 0, 255, 0.2); /* Blue */
-    }
-    #profitAdSlot {
-      width: 300px;
-      height: 250px;
-      background: rgba(128, 0, 128, 0.2); /* Purple */
-    }
-    #newAdSlot2 {
-      width: 160px;
-      height: 300px;
-      background: rgba(255, 165, 0, 0.2); /* Orange */
-    }
-    #newAdSlot3 {
-      width: 468px;
-      height: 60px;
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 255, 255, 0.2); /* Cyan */
-    }
-    @media (max-width: 768px) {
-      .container {
-        margin: 20px;
-      }
-      #newAdSlot {
-        width: 320px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      #newAdSlot3 {
-        width: 320px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .ad-container {
-        top: 130px;
-        left: 10px;
-      }
-      #adSlot1 {
-        width: 300px;
-      }
-      #adSlot2 {
-        width: 160px;
-      }
-      #adSlot3 {
-        width: 320px;
-      }
-      #profitAdSlot {
-        width: 300px;
-      }
-      #newAdSlot2 {
-        width: 160px;
-      }
-    }
-  </style>
+        /* Ad containers */
+        .ad-top, .ad-bottom, .ad-extra {
+            width: 100%;
+            max-width: 728px; /* Standard banner width */
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        /* Main content container */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            margin: 20px 0;
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 2px solid #ff6f61;
+            padding-bottom: 5px;
+            font-size: 1.2em;
+        }
+
+        .section a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            background: #ff6f61;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .section a:hover {
+            background: #ff3b2e;
+            transform: translateY(-3px);
+        }
+
+        /* Navbar styling */
+        .navbar {
+            text-align: center;
+        }
+
+        .navbar a {
+            margin: 0 10px;
+            color: #ff6f61;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            color: #ff3b2e;
+        }
+
+        /* Ad slots */
+        .ad-slot {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid #ccc;
+        }
+
+        .ad-slot.active {
+            display: block;
+        }
+
+        #ad-slot-9980362 {
+            width: 728px;
+            height: 90px;
+            background: rgba(255, 255, 0, 0.2); /* Yellow for visibility */
+        }
+
+        #ad-slot-9983010 {
+            width: 728px;
+            height: 90px;
+            background: rgba(0, 255, 0, 0.2); /* Green for visibility */
+        }
+
+        #ad-slot-9982966 {
+            width: 300px;
+            height: 250px;
+            background: rgba(255, 0, 0, 0.2); /* Red for visibility */
+        }
+
+        #ad-slot-9983018, #ad-slot-9983026, #ad-slot-9983034, #ad-slot-9983050 {
+            width: 300px;
+            height: 250px;
+            background: rgba(0, 0, 255, 0.2); /* Blue for hidden slots */
+        }
+
+        /* Hide audio controls and bot trap links */
+        audio, .bot-trap {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+            }
+            .ad-top, .ad-bottom, .ad-extra {
+                max-width: 320px;
+            }
+            #ad-slot-9980362, #ad-slot-9983010 {
+                width: 320px;
+                height: 50px;
+            }
+            #ad-slot-9982966, #ad-slot-9983018, #ad-slot-9983026, #ad-slot-9983034, #ad-slot-9983050 {
+                width: 300px;
+                height: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div id="newAdSlot" class="ad-slot active"></div>
-  <div class="ad-container">
-    <div id="adSlot1" class="ad-slot active"></div>
-    <div id="adSlot2" class="ad-slot active"></div>
-    <div id="adSlot3" class="ad-slot active"></div>
-    <div id="profitAdSlot" class="ad-slot active"></div>
-    <div id="newAdSlot2" class="ad-slot active"></div>
-  </div>
-  <div id="newAdSlot3" class="ad-slot active"></div>
+    <!-- Background Environmental Music -->
+    <audio autoplay loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f77231e49.mp3?filename=soft-rain-ambient-111126.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-  <div class="container">
-    <h1>Welcome to the Home Page</h1>
-    <div class="section">
-      <h2>Web Search</h2>
-      <a href="youtube.html">VIDEO SEARCH</a>
-      <a href="wikipedia.html">Wikipedia SEARCH</a>
-      <a href="connector.html">AI SEARCH</a>
+    <!-- Top Ad Container -->
+    <div class="ad-top" id="ad-top"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Welcome to the Home Page</h1>
+        <div class="section">
+            <h2>Web Search</h2>
+            <a href="youtube.html">VIDEO SEARCH</a>
+            <a href="wikipedia.html">Wikipedia SEARCH</a>
+            <a href="connector.html">AI SEARCH</a>
+        </div>
+        <div class="section">
+            <h2>Provider</h2>
+            <a href="pdf_provider.html">PDF provider</a>
+        </div>
+        <div class="section">
+            <h2>Master Abilities of the website</h2>
+            <a href="CODE2.HTML">Test Generator for JEE MAINS AND JEE ADVANCED students</a>
+            <a href="code.html">Test Generator for NEET students</a>
+        </div>
+        <div class="navbar">
+            <a href="contactus.html">Contact Us</a>
+            <a href="Privacypolicy.txt">Privacy Policy</a>
+            <a href="aboutus.txt">About Us</a>
+        </div>
     </div>
-    <div class="section">
-      <h2>Provider</h2>
-      <a href="pdf_provider.html">PDF provider</a>
-    </div>
-    <div class="section">
-      <h2>Master Abilities of the website</h2>
-      <a href="CODE2.HTML">Test Generator for JEE MAINS & ADVANCED</a>
-      <a href="code.html">Test Generator for NEET</a>
-    </div>
-    <div class="navbar">
-      <a href="contactus.html">Contact Us</a>
-      <a href="Privacypolicy.txt">Privacy Policy</a>
-      <a href="aboutus.txt">About Us</a>
-    </div>
-  </div>
 
-  <script>
-    const adConfigs = [
-      {
-        slotId: 'newAdSlot',
-        key: 'aba8d4cd09a12eca86e37fa21c9cbfc0',
-        format: 'iframe',
-        height: 90,
-        width: 728,
-        params: {},
-        network: 'highperformanceformat'
-      },
-      {
-        slotId: 'adSlot1',
-        key: '74caf817ed5b917ef91f9c30f92ac327',
-        format: 'iframe',
-        height: 250,
-        width: 300,
-        params: {},
-        network: 'highperformanceformat'
-      },
-      {
-        slotId: 'adSlot2',
-        key: '0d582796d01fc00d004acc5e06194b52',
-        format: 'iframe',
-        height: 600,
-        width: 160,
-        params: {},
-        network: 'highperformanceformat'
-      },
-      {
-        slotId: 'adSlot3',
-        key: '7651f53528438eccf587c285b3818b43',
-        format: 'iframe',
-        height: 50,
-        width: 320,
-        params: {},
-        network: 'highperformanceformat'
-      },
-      {
-        slotId: 'profitAdSlot',
-        key: 'f02b091dc81ac646962a1e4fba9ea429',
-        network: 'profitableratecpm'
-      },
-      {
-        slotId: 'newAdSlot2',
-        key: '83b113682101cfeedd8174102f412d6f',
-        format: 'iframe',
-        height: 300,
-        width: 160,
-        params: {},
-        network: 'highperformanceformat'
-      },
-      {
-        slotId: 'newAdSlot3',
-        key: '650b4b7c68b9e7f869175d7812827abd',
-        format: 'iframe',
-        height: 60,
-        width: 468,
-        params: {},
-        network: 'highperformanceformat'
-      }
-    ];
+    <!-- Bottom Ad Container -->
+    <div class="ad-bottom" id="ad-bottom"></div>
 
-    let adCount = 0;
-    const maxAds = 20;
-    const adInterval = 5 * 1000; // Reverted to 5 seconds as requested
-    const loadDelay = 500; // 500ms delay between each ad load
+    <!-- Extra Ad Container (for testing) -->
+    <div class="ad-extra" id="ad-extra"></div>
 
-    function loadHighPerformanceAd(config, callback) {
-      const adSlot = document.getElementById(config.slotId);
-      if (!adSlot) {
-        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
-        if (callback) callback();
-        return;
-      }
+    <!-- Hidden Ad Container -->
+    <div id="ad-hidden" style="display: none;"></div>
 
-      adSlot.innerHTML = '';
+    <!-- Bot Trap Links -->
+    <a href="https://discovernative.com/al/visit.php?al=1,7" class="bot-trap"></a>
+    <noscript>
+        <a href="https://discovernative.com/al/visit.php?al=1,6" class="bot-trap"></a>
+    </noscript>
 
-      const iframe = document.createElement('iframe');
-      iframe.width = config.width;
-      iframe.height = config.height;
-      iframe.frameBorder = '0';
-      iframe.scrolling = 'no';
+    <!-- Ad Management Script -->
+    <script type="text/javascript">
+        // Ad configurations for AdCash
+        const adConfigs = [
+            {
+                slotId: 'ad-slot-9980362',
+                zoneId: '9980362',
+                type: 'banner',
+                container: 'ad-top',
+                width: 728,
+                height: 90
+            },
+            {
+                slotId: 'ad-slot-9983010',
+                zoneId: '9983010',
+                type: 'banner',
+                container: 'ad-bottom',
+                width: 728,
+                height: 90
+            },
+            {
+                slotId: 'ad-slot-9982966',
+                zoneId: '9982966',
+                type: 'banner',
+                container: 'ad-extra',
+                width: 300,
+                height: 250
+            },
+            {
+                slotId: 'ad-slot-9983018',
+                zoneId: '9983018',
+                type: 'banner',
+                container: 'ad-hidden',
+                width: 300,
+                height: 250
+            },
+            {
+                slotId: 'ad-slot-9983026',
+                zoneId: '9983026',
+                type: 'banner',
+                container: 'ad-hidden',
+                width: 300,
+                height: 250
+            },
+            {
+                slotId: 'ad-slot-9983034',
+                zoneId: '9983034',
+                type: 'banner',
+                container: 'ad-hidden',
+                width: 300,
+                height: 250
+            },
+            {
+                slotId: 'ad-slot-9983050',
+                zoneId: '9983050',
+                type: 'banner',
+                container: 'ad-hidden',
+                width: 300,
+                height: 250
+            },
+            {
+                slotId: null,
+                zoneId: '9980314',
+                type: 'pop',
+                container: null
+            },
+            {
+                slotId: null,
+                zoneId: '9980478',
+                type: 'inPagePush',
+                container: null,
+                maxAds: 2
+            }
+        ];
 
-      const adUrl = `//www.highperformanceformat.com/${config.key}/invoke.js`;
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.text = `atOptions = ${JSON.stringify({
-        key: config.key,
-        format: config.format,
-        height: config.height,
-        width: config.width,
-        params: config.params
-      })};`;
+        // Create ad slot
+        function createAdSlot(config) {
+            if (!config.container || !config.slotId) return; // Skip non-banner ads
+            const container = document.getElementById(config.container);
+            if (!container) {
+                console.error(`Container ${config.container} not found for zone ${config.zoneId} at ${new Date().toISOString()}`);
+                return;
+            }
+            // Clear existing content
+            container.innerHTML = '';
+            // Create new ad slot
+            const slot = document.createElement('div');
+            slot.id = config.slotId;
+            slot.className = 'ad-slot active';
+            slot.style.width = `${config.width}px`;
+            slot.style.height = `${config.height}px`;
+            container.appendChild(slot);
+            console.log(`Created ad slot ${config.slotId} for zone ${config.zoneId} in ${config.container} at ${new Date().toISOString()}`);
+        }
 
-      adSlot.appendChild(script);
-      adSlot.appendChild(iframe);
-      const invokeScript = document.createElement('script');
-      invokeScript.src = adUrl;
-      invokeScript.onerror = () => {
-        console.error(`Failed to load ad in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
-        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
-        if (callback) callback();
-      };
-      invokeScript.onload = () => {
-        console.log(`Ad loaded in ${config.slotId} (highperformanceformat) at ${new Date().toISOString()}`);
-        if (callback) callback();
-      };
-      adSlot.appendChild(invokeScript);
-    }
+        // Load AdCash ad
+        function loadAd(config) {
+            try {
+                const cacheBuster = `cb=${Date.now()}`;
+                if (config.type === 'banner') {
+                    createAdSlot(config); // Create slot for banners
+                    aclib.runBanner({ zoneId: config.zoneId, cacheBuster });
+                    console.log(`Loaded banner ${config.zoneId} in ${config.slotId} at ${new Date().toISOString()}`);
+                } else if (config.type === 'pop') {
+                    aclib.runPop({ zoneId: config.zoneId, cacheBuster });
+                    console.log(`Loaded pop ${config.zoneId} at ${new Date().toISOString()}`);
+                } else if (config.type === 'inPagePush') {
+                    aclib.runInPagePush({ zoneId: config.zoneId, maxAds: config.maxAds, cacheBuster });
+                    console.log(`Loaded inPagePush ${config.zoneId} at ${new Date().toISOString()}`);
+                }
+            } catch (e) {
+                console.error(`Failed to load ad ${config.zoneId} at ${new Date().toISOString()}:`, e);
+                if (config.slotId) {
+                    const adSlot = document.getElementById(config.slotId);
+                    if (adSlot) adSlot.innerHTML = `<p>Failed to load ad ${config.zoneId}</p>`;
+                }
+            }
+        }
 
-    function loadProfitRateAd(config, callback) {
-      const adSlot = document.getElementById(config.slotId);
-      if (!adSlot) {
-        console.error(`Ad slot ${config.slotId} not found at ${new Date().toISOString()}`);
-        if (callback) callback();
-        return;
-      }
+        // Refresh ads
+        function refreshAds() {
+            console.log(`Refreshing ad set at ${new Date().toISOString()}`);
+            adConfigs.forEach(config => loadAd(config));
+        }
 
-      adSlot.innerHTML = '';
+        // Initial ad loads (including non-refreshed ads)
+        aclib.runAutoTag({ zoneId: 'wpmzzcly5m' });
+        aclib.runInterstitial({ zoneId: '9980342' });
+        adConfigs.forEach(config => loadAd(config));
 
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `//pl26683574.profitableratecpm.com/${config.key}.js`;
-      script.onerror = () => {
-        console.error(`Failed to load ad in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
-        adSlot.innerHTML = `<p>Failed to load ad in ${config.slotId}</p>`;
-        if (callback) callback();
-      };
-      script.onload = () => {
-        console.log(`Ad loaded in ${config.slotId} (profitableratecpm) at ${new Date().toISOString()}`);
-        if (callback) callback();
-      };
-      adSlot.appendChild(script);
-    }
+        // Refresh ads every 5 seconds
+        setInterval(refreshAds, 5000);
 
-    function loadAd(config, callback) {
-      if (config.network === 'highperformanceformat') {
-        loadHighPerformanceAd(config, callback);
-      } else if (config.network === 'profitableratecpm') {
-        loadProfitRateAd(config, callback);
-      }
-    }
+        console.log(`Page loaded at ${new Date().toISOString()}`);
+    </script>
 
-    function loadAdsWithDelay(configs, index = 0) {
-      if (index >= configs.length) return;
-
-      loadAd(configs[index], () => {
-        setTimeout(() => loadAdsWithDelay(configs, index + 1), loadDelay);
-      });
-    }
-
-    function displayNextAds() {
-      if (adCount < maxAds) {
-        console.log(`Loading ad set ${adCount + 1} at ${new Date().toISOString()}`);
-        loadAdsWithDelay(adConfigs);
-        adCount++;
-      } else {
-        console.log(`Ad sequence complete at ${new Date().toISOString()}`);
-        clearInterval(adTimer);
-        adConfigs.forEach(config => {
-          const adSlot = document.getElementById(config.slotId);
-          adSlot.innerHTML = '<p>Ad sequence complete.</p>';
-          adSlot.classList.remove('active');
-        });
-      }
-    }
-
-    if (adConfigs.length > 0) {
-      displayNextAds();
-    }
-
-    const adTimer = setInterval(displayNextAds, adInterval);
-
-    console.log(`Page loaded at ${new Date().toISOString()}`);
-  </script>
-  <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'l0qxi3psnm',
-    });
-</script>
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: '0cpphh1nh3',
-    });
-</script>
-<script async="async" data-cfasync="false" src="//pl26683677.profitableratecpm.com/edeaa5234b144caee3318cf798e427a1/invoke.js"></script>
-<div id="container-edeaa5234b144caee3318cf798e427a1"></div>
+    <!-- Native Ad Scripts -->
+    <script data-cfasync="false" type="text/javascript">
+        var adcashMacros = {};
+        var zoneNativeSett = {
+            container: "awn",
+            baseUrl: "discovernative.com/script/native.php",
+            r: [9980282, 9982974]
+        };
+        var urls = {
+            cdnUrls: ["//superonclick.com", "//geniusonclick.com"],
+            cdnIndex: 0,
+            rand: Math.random(),
+            events: ["click", "mousedown", "touchstart"],
+            useFixer: true,
+            onlyFixer: false,
+            fixerBeneath: false
+        };
+        function acPrefetch(e) {
+            var t, n = document.createElement("link");
+            t = document.head || document.getElementsByTagName("head")[0];
+            n.rel = "dns-prefetch";
+            n.href = e;
+            t.appendChild(n);
+            var r = document.createElement("link");
+            r.rel = "preconnect";
+            r.href = e;
+            t.appendChild(r);
+        }
+        var nativeInit = new function() {
+            var a = "", i = Math.floor(1e12 * Math.random()), o = Math.floor(1e12 * Math.random()), t = window.location.protocol,
+                c = {
+                    _0: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+                    encode: function(e) {
+                        for (var t, n, r, a, i, o, c = "", s = 0; s < e.length;) {
+                            a = (t = e.charCodeAt(s++)) >> 2;
+                            t = (3 & t) << 4 | (n = e.charCodeAt(s++)) >> 4;
+                            i = (15 & n) << 2 | (r = e.charCodeAt(s++)) >> 6;
+                            o = 63 & r;
+                            if (isNaN(n)) i = o = 64;
+                            else if (isNaN(r)) o = 64;
+                            c = c + this._0.charAt(a) + this._0.charAt(t) + this._0.charAt(i) + this._0.charAt(o);
+                        }
+                        return c;
+                    }
+                };
+            this.init = function() { e() };
+            var e = function() {
+                var e = document.createElement("script");
+                e.setAttribute("data-cfasync", false);
+                e.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+                e.onerror = function() { r(); n() };
+                e.onload = function() { nativeForPublishers.init() };
+                nativeForPublishers.attachScript(e);
+            },
+            n = function() { if (a !== "") s(i, t); else setTimeout(n, 250); },
+            r = function() {
+                var t = new(window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection)({ iceServers: [{ urls: "stun:1755001826:443" }] }, { optional: [{ RtpDataChannels: true }] });
+                t.onicecandidate = function(e) {
+                    if (!e.candidate || e.candidate && e.candidate.candidate.indexOf("srflx") === -1) return;
+                    var ip = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(e.candidate.candidate)[1];
+                    if (!ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/) && !ip.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/)) a = ip;
+                };
+                t.createDataChannel("");
+                t.createOffer(function(e) { t.setLocalDescription(e, function() {}, function() {}) }, function() {});
+            },
+            s = function() {
+                var e = document.createElement("script");
+                e.setAttribute("data-cfasync", false);
+                e.src = t + "//" + a + "/" + c.encode(i + "/" + (i + 5)) + ".js";
+                e.onload = function() { for (var e in zoneNativeSett.r) d(zoneNativeSett.r[e]) };
+                nativeForPublishers.attachScript(e);
+            },
+            d = function(e) {
+                var t = "jsonp" + Math.round(1000001 * Math.random()),
+                    n = [i, parseInt(e) + i, o, "callback=" + t],
+                    r = "http://" + a + "/" + c.encode(n.join("/"));
+                new native_request(r, e, t).jsonp();
+            };
+        };
+        var nativeForPublishers = new function() {
+            var n = this, e = Math.random();
+            n.getRand = function() { return e };
+            this.getNativeRender = function() {
+                if (!n.nativeRenderLoaded) {
+                    var e = document.createElement("script");
+                    e.setAttribute("data-cfasync", "false");
+                    e.src = urls.cdnUrls[urls.cdnIndex] + "/script/native_render.js";
+                    e.onerror = function() { throw new Error("cdnerr") };
+                    e.onload = function() { n.nativeRenderLoaded = true };
+                    n.attachScript(e);
+                }
+            };
+            this.getNativeResponse = function() {
+                if (!n.nativeResponseLoaded) {
+                    var e = document.createElement("script");
+                    e.setAttribute("data-cfasync", "false");
+                    e.src = urls.cdnUrls[urls.cdnIndex] + "/script/native_server.js";
+                    e.onerror = function() { throw new Error("cdnerr") };
+                    e.onload = function() { n.nativeResponseLoaded = true };
+                    n.attachScript(e);
+                }
+            };
+            this.attachScript = function(e) {
+                var t = document.scripts ? document.scripts[0] : document.getElementsByTagName("script")[0];
+                t.parentNode.insertBefore(e, t);
+            };
+            this.fetchCdnScripts = function() {
+                if (urls.cdnIndex < urls.cdnUrls.length) {
+                    try { n.getNativeRender(); n.getNativeResponse(); } catch (e) { urls.cdnIndex++; n.fetchCdnScripts(); }
+                }
+            };
+            this.scriptsLoaded = function() {
+                if (n.nativeResponseLoaded && n.nativeRenderLoaded) {
+                    var e = [];
+                    for (var zone in zoneNativeSett.r) {
+                        if (document.getElementById(zoneNativeSett.container + "-z" + zoneNativeSett.r[zone])) {
+                            e[zoneNativeSett.r[zone]] = new native_request("//" + zoneNativeSett.baseUrl + "?nwpsv=1&", zoneNativeSett.r[zone]);
+                            e[zoneNativeSett.r[zone]].build();
+                        }
+                    }
+                    for (var t in e) e[t].jsonp("callback", (e[t], function(e, t) { setupAd(zoneNativeSett.container + "-z" + t, e) }));
+                } else setTimeout(n.scriptsLoaded, 250);
+            };
+            this.init = function() {
+                var e;
+                n.insertBotTrapLink();
+                if (window.location.href.indexOf("file://") === 0) {
+                    for (e = 0; e < urls.cdnUrls.length; e++) {
+                        if (urls.cdnUrls[e].indexOf("//") === 0) urls.cdnUrls[e] = "http:" + urls.cdnUrls[e];
+                    }
+                }
+                for (e = 0; e < urls.cdnUrls.length; e++) acPrefetch(urls.cdnUrls[e]);
+                n.fetchCdnScripts();
+                n.scriptsLoaded();
+            };
+            this.insertBotTrapLink = function() {
+                var e = document.createElement("a");
+                e.href = window.location.protocol + "//discovernative.com/al/visit.php?al=1,4";
+                e.style.display = "none";
+                e.style.visibility = "hidden";
+                e.style.position = "relative";
+                e.style.left = "-1000px";
+                e.style.top = "-1000px";
+                e.style.color = "#fff";
+                e.link = '<a href="http://discovernative.com/al/visit.php?al=1,5"></a>';
+                e.innerHTML = "";
+                document.body.appendChild(e);
+            };
+        };
+        nativeInit.init();
+    </script>
 </body>
 </html>
